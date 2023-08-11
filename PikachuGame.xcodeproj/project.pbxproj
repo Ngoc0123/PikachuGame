@@ -11,6 +11,8 @@
 		2F5B85092A860B0D00D5BB39 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5B85082A860B0D00D5BB39 /* ContentView.swift */; };
 		2F5B850B2A860B0E00D5BB39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F5B850A2A860B0E00D5BB39 /* Assets.xcassets */; };
 		2F5B850F2A860B0E00D5BB39 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F5B850E2A860B0E00D5BB39 /* Preview Assets.xcassets */; };
+		2F5B85162A860EA000D5BB39 /* PokemonBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5B85152A860E9F00D5BB39 /* PokemonBlock.swift */; };
+		2F5B85182A86202100D5BB39 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5B85172A86202100D5BB39 /* GridView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		2F5B850A2A860B0E00D5BB39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F5B850C2A860B0E00D5BB39 /* PikachuGame.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PikachuGame.entitlements; sourceTree = "<group>"; };
 		2F5B850E2A860B0E00D5BB39 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2F5B85152A860E9F00D5BB39 /* PokemonBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonBlock.swift; sourceTree = "<group>"; };
+		2F5B85172A86202100D5BB39 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 			children = (
 				2F5B85062A860B0D00D5BB39 /* PikachuGameApp.swift */,
 				2F5B85082A860B0D00D5BB39 /* ContentView.swift */,
+				2F5B85172A86202100D5BB39 /* GridView.swift */,
+				2F5B85152A860E9F00D5BB39 /* PokemonBlock.swift */,
 				2F5B850A2A860B0E00D5BB39 /* Assets.xcassets */,
 				2F5B850C2A860B0E00D5BB39 /* PikachuGame.entitlements */,
 				2F5B850D2A860B0E00D5BB39 /* Preview Content */,
@@ -141,6 +147,8 @@
 			files = (
 				2F5B85092A860B0D00D5BB39 /* ContentView.swift in Sources */,
 				2F5B85072A860B0D00D5BB39 /* PikachuGameApp.swift in Sources */,
+				2F5B85182A86202100D5BB39 /* GridView.swift in Sources */,
+				2F5B85162A860EA000D5BB39 /* PokemonBlock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,10 +283,10 @@
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -313,10 +321,10 @@
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
