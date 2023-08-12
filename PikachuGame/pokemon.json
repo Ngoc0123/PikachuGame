@@ -1,0 +1,22 @@
+[
+    {
+        "id" : -1,
+        "name" : ""
+    },
+    {
+        "id" : 0,
+        "name" : "pikachu"
+    },
+    {
+        "id" : 1,
+        "name" : "charmander"
+    },
+    {
+        "id" : 2,
+        "name" : "squirtle"
+    },
+    {
+        "id" : 3,
+        "name" : "bulbasaur"
+    },
+]
