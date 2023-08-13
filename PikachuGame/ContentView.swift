@@ -24,12 +24,22 @@ struct ContentView: View {
     
     var body: some View {
         VStack{
-            Button {
-                self.shuffleRemaining()
-            } label: {
-                Text("Shuffle")
-                    .foregroundColor(.black)
+            
+            HStack{
+                Button {
+                } label: {
+                    Text("New")
+                        .foregroundColor(.black)
+                }
+                
+                Button {
+                    self.shuffleRemaining()
+                } label: {
+                    Text("Shuffle")
+                        .foregroundColor(.black)
+                }
             }
+           
 
             
             GridView(pokemonGrid: pokemonGrid, selectedPokeGridIndex1: $selectedPokeGridIndex1, selectedPokeGridIndex2: $selectedPokeGridIndex2, selecting: $selecting, columns: columns, rows: rows)
@@ -57,14 +67,15 @@ struct ContentView: View {
         
     }
     
-    init(pokemonGrid: [Pokemon], columns: Int, rows: Int) {
+    init( columns: Int, rows: Int) {
+        var pokes = PokemonModel().generatePokemonArray(columns: columns, rows: rows)
         self.columns = columns
         self.rows = rows
         
-        self.pokemonGrid = pokemonGrid
+        self.pokemonGrid = pokes
         
         self.i = 0
-        self.remainPokemon = pokemonGrid
+        self.remainPokemon = pokes
         self.remainIndex = []
     }
     
@@ -104,21 +115,9 @@ struct ContentView: View {
         return res
     }
     
-    func checkRow(index1: Int, index2: Int) -> Bool{
-        var higher = 0
-        var lower = 0
-        if index1 > index2 {
-            higher = index1
-            lower = index2
-        }else{
-            lower = index1
-            higher = index2
-        }
-        
-        let row = index1 / columns
-        
-        for index in (lower%columns+1)..<(higher%columns){
-            if pokemonGrid[index+row*columns].id != -1{
+    func checkRow(x1: Int, x2: Int, y: Int) -> Bool{
+        for index in x1+1..<x2{
+            if pokemonGrid[index+y*columns].id != -1{
                 return false
             }
         }
@@ -126,20 +125,11 @@ struct ContentView: View {
         return true
     }
     
-    func checkCol(index1: Int, index2: Int) -> Bool{
-        var higher = 0
-        var lower = 0
-        if index1 > index2 {
-            higher = index1
-            lower = index2
-        }else{
-            lower = index1
-            higher = index2
-        }
-        let col = index1 % columns
-        
-        for index in (lower/columns+1)..<(higher/columns){
-            if pokemonGrid[col+index*columns].id != -1{
+    func checkCol(y1: Int, y2: Int, x:Int) -> Bool{
+
+
+        for index in y1+1..<y2{
+            if pokemonGrid[x+index*columns].id != -1{
                 return false
             }
         }
@@ -156,28 +146,113 @@ struct ContentView: View {
     }
     
     func checkHRectangle(index1: Int, index2: Int) -> Bool{
+
+        var u,d:Int
+
+        if getYCoordinate(index: index1) > getYCoordinate(index: index2){
+            u = index2
+            d = index1
+        }else{
+            d = index2
+            u = index1
+            
+        }
+        
+        
+        for col in getXCoordinate(index: index1)+1..<getXCoordinate(index: index2){
+            if checkCol(y1: getYCoordinate(index: u) - 1, y2: getYCoordinate(index: d) + 1, x: col){
+                if checkRow(x1: getXCoordinate(index: index1), x2: col+1, y: getYCoordinate(index: index1)) &&
+                    checkRow(x1: col-1, x2: getXCoordinate(index: index2), y: getYCoordinate(index: index2))
+                {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    func checkVRectangle(index1: Int, index2: Int) -> Bool{
+
+        var l,r:Int
+
+        if getXCoordinate(index: index1) > getXCoordinate(index: index2){
+            l = index2
+            r = index1
+        }else{
+            r = index2
+            l = index1
+            
+        }
+        
+        
+        for row in getYCoordinate(index: index1)+1..<getYCoordinate(index: index2){
+            if checkRow(x1: getXCoordinate(index: l) - 1, x2: getXCoordinate(index: r) + 1, y: row){
+                if checkCol(y1: getYCoordinate(index: index1), y2: row+1, x: getXCoordinate(index: index1)) &&
+                    checkCol(y1: row-1, y2: getYCoordinate(index: index2), x: getXCoordinate(index: index2))
+                {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    func matchingBlocks(index1: Int, index2: Int) -> Bool{
+        if pokemonGrid[index1].id != pokemonGrid[index2].id{
+            return false
+        }
+        
         var x1 = getXCoordinate(index: index1),y1 = getYCoordinate(index: index1)
         
         var x2 = getXCoordinate(index: index2),y2 = getYCoordinate(index: index2)
         
+        var l,r,d,u:Int
         
-    }
-    
-    func matchingBlocks(index1: Int, index2: Int) -> Bool{
+        if x1 > x2 {
+            r = index1
+            l = index2
+        }else{
+            l = index1
+            r = index2
+        }
+        
+        if y1 > y2 {
+            d = index1
+            u = index2
+        }else{
+            u = index1
+            d = index2
+        }
+        
         let check = checkCase(index1: index1, index2: index2)
-        var match = false
+        //var match = false
         
         switch check{
             
         case 1:
-            match = checkRow(index1: index1, index2: index2)
+            if checkRow(x1: getXCoordinate(index: l), x2: getXCoordinate(index: r), y: y1) {
+                return true
+            }
         case 2:
-            match = checkCol(index1: index1, index2: index2)
+            if checkCol(y1: getYCoordinate(index: u), y2: getYCoordinate(index: d), x: x1) {
+                return true
+            }
+        case 3:
+            if checkHRectangle(index1: l, index2: r) {
+                
+                return true
+            }
+            if checkVRectangle(index1: u, index2: d) {
+                return true
+            }
+            
         default: break
             
         }
         
-        return match
+        
+        
+        return false
     }
     
     
@@ -185,6 +260,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(pokemonGrid: PokemonModel().generatePokemonArray(columns: 4, rows: 4), columns: 4, rows: 4).previewInterfaceOrientation(.landscapeLeft)
+        ContentView(columns: 4, rows: 4).previewInterfaceOrientation(.landscapeLeft)
     }
 }

@@ -18,24 +18,26 @@ struct GridView: View {
     var rows: Int
     
     var body: some View {
- 
-        Grid(horizontalSpacing: 0, verticalSpacing: 0) {
-            ForEach(0..<(rows + 2)){row in
-                GridRow {
-                    ForEach(0..<(columns + 2)){column in
-                        
-                        if (row == 0 || column == 0 || row == rows + 1 || column == columns + 1){
-                            PokemonBlock(index: -1,pokemon: PokemonModel().pokemonArray[0], selecting: $selecting ,selectedPokeGridIndex1: $selectedPokeGridIndex1, selectedPokeGridIndex2: $selectedPokeGridIndex2)
-                                
-                        }else{
-                            PokemonBlock(index: (row-1)*columns + column - 1,pokemon:  pokemonGrid[(row-1)*columns + column - 1], selecting: $selecting ,selectedPokeGridIndex1: $selectedPokeGridIndex1, selectedPokeGridIndex2: $selectedPokeGridIndex2)
-                                
-                                
+        VStack{
+            Grid(horizontalSpacing: 0, verticalSpacing: 0) {
+                ForEach(0..<(rows + 2)){row in
+                    GridRow {
+                        ForEach(0..<(columns + 2)){column in
+                            
+                            if (row == 0 || column == 0 || row == rows + 1 || column == columns + 1){
+                                PokemonBlock(index: -1,pokemon: PokemonModel().pokemonArray[0], selecting: $selecting ,selectedPokeGridIndex1: $selectedPokeGridIndex1, selectedPokeGridIndex2: $selectedPokeGridIndex2)
+                                    
+                            }else{
+                                PokemonBlock(index: (row-1)*columns + column - 1,pokemon:  pokemonGrid[(row-1)*columns + column - 1], selecting: $selecting ,selectedPokeGridIndex1: $selectedPokeGridIndex1, selectedPokeGridIndex2: $selectedPokeGridIndex2)
+                                    
+                                    
+                            }
                         }
                     }
                 }
             }
         }
+        .frame(width: 440,height: 300)
 
     }
 }

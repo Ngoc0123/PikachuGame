@@ -11,7 +11,7 @@ import SwiftUI
 struct PikachuGameApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(pokemonGrid: PokemonModel().generatePokemonArray(columns: 8, rows: 6), columns: 8, rows: 6)
+            ContentView(columns: 10, rows: 6)
         }
     }
 }

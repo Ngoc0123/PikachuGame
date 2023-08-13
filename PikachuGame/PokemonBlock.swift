@@ -104,6 +104,6 @@ struct MyIcon: Shape {
 
 struct PokemonBlock_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonBlock(index: 0,pokemon: PokemonModel().pokemonArray[0], selecting: .constant(2) ,selectedPokeGridIndex1: .constant(-1), selectedPokeGridIndex2: .constant(-1))
+        PokemonBlock(index: 0,pokemon: PokemonModel().pokemonArray[1], selecting: .constant(2) ,selectedPokeGridIndex1: .constant(-1), selectedPokeGridIndex2: .constant(-1))
     }
 }
