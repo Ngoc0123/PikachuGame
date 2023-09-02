@@ -8,19 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		2F5B85072A860B0D00D5BB39 /* PikachuGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5B85062A860B0D00D5BB39 /* PikachuGameApp.swift */; };
-		2F5B85092A860B0D00D5BB39 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5B85082A860B0D00D5BB39 /* ContentView.swift */; };
+		2F5B85092A860B0D00D5BB39 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5B85082A860B0D00D5BB39 /* GameView.swift */; };
 		2F5B850B2A860B0E00D5BB39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F5B850A2A860B0E00D5BB39 /* Assets.xcassets */; };
 		2F5B850F2A860B0E00D5BB39 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F5B850E2A860B0E00D5BB39 /* Preview Assets.xcassets */; };
 		2F5B85162A860EA000D5BB39 /* PokemonBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5B85152A860E9F00D5BB39 /* PokemonBlock.swift */; };
 		2F5B85182A86202100D5BB39 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5B85172A86202100D5BB39 /* GridView.swift */; };
 		2F5B851A2A8693F600D5BB39 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5B85192A8693F600D5BB39 /* Pokemon.swift */; };
 		2F5B851D2A86979500D5BB39 /* pokemon.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F5B851C2A86979500D5BB39 /* pokemon.json */; };
+		2F5B851F2A8923A100D5BB39 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5B851E2A8923A100D5BB39 /* MenuView.swift */; };
+		2F5B85212A9520DB00D5BB39 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5B85202A9520DB00D5BB39 /* TimerViewModel.swift */; };
+		2F5B85232A96644400D5BB39 /* TimerBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5B85222A96644400D5BB39 /* TimerBar.swift */; };
+		2FE21EBE2AA2EDEA005E38D6 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE21EBD2AA2EDEA005E38D6 /* Player.swift */; };
+		2FE21EC02AA30228005E38D6 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE21EBF2AA30228005E38D6 /* PlayerViewModel.swift */; };
+		2FE21EC22AA30899005E38D6 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE21EC12AA30899005E38D6 /* SettingView.swift */; };
+		2FE21EC42AA30C82005E38D6 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE21EC32AA30C82005E38D6 /* CustomButton.swift */; };
+		2FE21EC72AA371FC005E38D6 /* PlayerDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2FE21EC52AA371FC005E38D6 /* PlayerDataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2F5B85032A860B0D00D5BB39 /* PikachuGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PikachuGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F5B85062A860B0D00D5BB39 /* PikachuGameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PikachuGameApp.swift; sourceTree = "<group>"; };
-		2F5B85082A860B0D00D5BB39 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2F5B85082A860B0D00D5BB39 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		2F5B850A2A860B0E00D5BB39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F5B850C2A860B0E00D5BB39 /* PikachuGame.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PikachuGame.entitlements; sourceTree = "<group>"; };
 		2F5B850E2A860B0E00D5BB39 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -28,6 +36,14 @@
 		2F5B85172A86202100D5BB39 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		2F5B85192A8693F600D5BB39 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
 		2F5B851C2A86979500D5BB39 /* pokemon.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pokemon.json; sourceTree = "<group>"; };
+		2F5B851E2A8923A100D5BB39 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		2F5B85202A9520DB00D5BB39 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
+		2F5B85222A96644400D5BB39 /* TimerBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerBar.swift; sourceTree = "<group>"; };
+		2FE21EBD2AA2EDEA005E38D6 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		2FE21EBF2AA30228005E38D6 /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
+		2FE21EC12AA30899005E38D6 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		2FE21EC32AA30C82005E38D6 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		2FE21EC62AA371FC005E38D6 /* PlayerDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PlayerDataModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,11 +76,19 @@
 		2F5B85052A860B0D00D5BB39 /* PikachuGame */ = {
 			isa = PBXGroup;
 			children = (
+				2F5B85222A96644400D5BB39 /* TimerBar.swift */,
 				2F5B85062A860B0D00D5BB39 /* PikachuGameApp.swift */,
-				2F5B85082A860B0D00D5BB39 /* ContentView.swift */,
+				2FE21EBD2AA2EDEA005E38D6 /* Player.swift */,
+				2FE21EBF2AA30228005E38D6 /* PlayerViewModel.swift */,
+				2F5B851E2A8923A100D5BB39 /* MenuView.swift */,
+				2FE21EC12AA30899005E38D6 /* SettingView.swift */,
+				2FE21EC32AA30C82005E38D6 /* CustomButton.swift */,
+				2F5B85082A860B0D00D5BB39 /* GameView.swift */,
+				2F5B85202A9520DB00D5BB39 /* TimerViewModel.swift */,
 				2F5B85172A86202100D5BB39 /* GridView.swift */,
 				2F5B85192A8693F600D5BB39 /* Pokemon.swift */,
 				2F5B851C2A86979500D5BB39 /* pokemon.json */,
+				2FE21EC52AA371FC005E38D6 /* PlayerDataModel.xcdatamodeld */,
 				2F5B85152A860E9F00D5BB39 /* PokemonBlock.swift */,
 				2F5B850A2A860B0E00D5BB39 /* Assets.xcassets */,
 				2F5B850C2A860B0E00D5BB39 /* PikachuGame.entitlements */,
@@ -152,11 +176,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F5B85212A9520DB00D5BB39 /* TimerViewModel.swift in Sources */,
+				2FE21EC02AA30228005E38D6 /* PlayerViewModel.swift in Sources */,
 				2F5B851A2A8693F600D5BB39 /* Pokemon.swift in Sources */,
-				2F5B85092A860B0D00D5BB39 /* ContentView.swift in Sources */,
+				2F5B85092A860B0D00D5BB39 /* GameView.swift in Sources */,
+				2F5B851F2A8923A100D5BB39 /* MenuView.swift in Sources */,
 				2F5B85072A860B0D00D5BB39 /* PikachuGameApp.swift in Sources */,
 				2F5B85182A86202100D5BB39 /* GridView.swift in Sources */,
 				2F5B85162A860EA000D5BB39 /* PokemonBlock.swift in Sources */,
+				2FE21EC42AA30C82005E38D6 /* CustomButton.swift in Sources */,
+				2FE21EBE2AA2EDEA005E38D6 /* Player.swift in Sources */,
+				2F5B85232A96644400D5BB39 /* TimerBar.swift in Sources */,
+				2FE21EC22AA30899005E38D6 /* SettingView.swift in Sources */,
+				2FE21EC72AA371FC005E38D6 /* PlayerDataModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +402,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2FE21EC52AA371FC005E38D6 /* PlayerDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2FE21EC62AA371FC005E38D6 /* PlayerDataModel.xcdatamodel */,
+			);
+			currentVersion = 2FE21EC62AA371FC005E38D6 /* PlayerDataModel.xcdatamodel */;
+			path = PlayerDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2F5B84FB2A860B0D00D5BB39 /* Project object */;
 }

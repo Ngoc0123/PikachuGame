@@ -19,4 +19,24 @@
         "id" : 3,
         "name" : "bulbasaur"
     },
+    {
+        "id" : 4,
+        "name" : "eevee"
+    },
+    {
+        "id" : 5,
+        "name" : "meo"
+    },
+    {
+        "id" : 6,
+        "name" : "jigglypuff"
+    },
+    {
+        "id" : 7,
+        "name" : "snorlax"
+    },
+    {
+        "id" : 8,
+        "name" : "totodile"
+    }
 ]

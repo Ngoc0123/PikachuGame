@@ -7,11 +7,19 @@
 
 import SwiftUI
 
+
 @main
 struct PikachuGameApp: App {
+    @StateObject var pvm = PlayerViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView(columns: 10, rows: 6)
+            ZStack{
+                Color.white
+                MenuView(pvm: pvm)
+            }
+            
+
         }
     }
 }

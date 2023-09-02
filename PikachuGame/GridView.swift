@@ -17,8 +17,12 @@ struct GridView: View {
     var columns: Int
     var rows: Int
     
+    
     var body: some View {
-        VStack{
+        ZStack{
+            
+                
+            
             Grid(horizontalSpacing: 0, verticalSpacing: 0) {
                 ForEach(0..<(rows + 2)){row in
                     GridRow {
@@ -37,7 +41,8 @@ struct GridView: View {
                 }
             }
         }
-        .frame(width: 440,height: 300)
+        .frame(width: UIDevice.current.userInterfaceIdiom == .phone ? 360 : 600,height: UIDevice.current.userInterfaceIdiom == .phone ? 320 : 480)
+        
 
     }
 }

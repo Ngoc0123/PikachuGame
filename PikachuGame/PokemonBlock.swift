@@ -15,31 +15,34 @@ struct PokemonBlock: View {
     @Binding var selectedPokeGridIndex1: Int
     @Binding var selectedPokeGridIndex2: Int
     
+    @State var blockWidth = 30.0
+    @State var blockHeight = 40.0
+    
     
     @State var tapped: Bool = false
     var body: some View {
         if pokemon.id == -1 {
             ZStack{
                 Color.clear
-                    .frame(width: 30,height: 30)
+                    .frame(width: blockWidth-10,height: blockHeight-10)
             }
         }
         else{
             ZStack{
                 MyIcon()
                     .foregroundColor(Color("blockShadow"))
-                    .frame(width: 38,height: 48)
+                    .frame(width: blockWidth*1.25,height: blockHeight*1.25)
                     .padding(.all,-10)
                     
                 
                     .offset(x: 4, y: 4)
                 Color("blockFront")
-                    .frame(width: 30,height: 40)
+                    .frame(width: blockWidth,height: blockHeight)
 
                 Image("\(pokemon.name)")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 25,height: 30)
+                    .frame(width: blockWidth-5,height: blockHeight-5)
 
                 
             }
@@ -75,7 +78,21 @@ struct PokemonBlock: View {
                 
             }
             .border((tapped && selecting != 0) ? .red : Color("blockFront"),width: 2)
-            
+            .onAppear{
+                switch UIDevice.current.userInterfaceIdiom {
+                case .phone:
+                    blockWidth = 21
+                    blockHeight = 32
+                    break
+                case .pad:
+                    // It's an iPad (or macOS Catalyst)
+                    blockWidth = 39
+                    blockHeight = 52
+                    break
+                default:
+                    break
+                }
+            }
         }
         
     }

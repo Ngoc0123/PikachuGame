@@ -21,24 +21,27 @@ struct Pokemon: Codable, Identifiable{
 class PokemonModel{
     var pokemonArray = decodeJsonFromJsonFile(jsonFileName: "pokemon.json")
     
-    func generatePokemonArray(columns: Int, rows: Int) -> [Pokemon]{
+    func generatePokemonArray(mode: Int) -> [Pokemon]{
+        
+        let columns = 4*mode
+        let rows = 3*mode
+        
+        //var pokemons_var = 3*mode
+        var pairs = 2*mode
         
         var pokemons: [Pokemon] = Array(repeating: PokemonModel().pokemonArray[0], count: columns*rows)
-        var indices: [Int] = []
         
-        for index in 0..<columns*rows {
-            indices.append(index)
-        }
+        var poke_index = 1
+        var cnt = 0
         
-        for _ in 0..<columns*rows/2 {
-            indices.shuffle()
-            let index = Int.random(in: 1..<pokemonArray.count)
-            let pokemon: Pokemon = PokemonModel().pokemonArray[index]
-            let position1 = indices.removeLast()
-            let position2 = indices.removeFirst()
-            
-            pokemons[position1] = pokemon
-            pokemons[position2] = pokemon
+        for index in stride(from: 0, to: columns*rows, by: 2) {
+            if cnt == pairs{
+                cnt = 0
+                poke_index += 1
+            }
+            pokemons[index] = PokemonModel().pokemonArray[poke_index]
+            pokemons[index+1] = PokemonModel().pokemonArray[poke_index]
+            cnt += 1
         }
         
         return pokemons
