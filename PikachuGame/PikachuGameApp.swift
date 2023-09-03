@@ -11,12 +11,15 @@ import SwiftUI
 @main
 struct PikachuGameApp: App {
     @StateObject var pvm = PlayerViewModel()
+    @StateObject private var dataController = DataController()
     
     var body: some Scene {
         WindowGroup {
             ZStack{
                 Color.white
-                MenuView(pvm: pvm)
+                MenuView(pvm: pvm,loggedIn: false)
+                    .environment(\.managedObjectContext, dataController.container.viewContext)
+                
             }
             
 

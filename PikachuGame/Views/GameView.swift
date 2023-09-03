@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GameView: View {
     @ObservedObject var pvm:PlayerViewModel
+    @Environment (\.managedObjectContext) var moc
     
     var columns:Int
     var rows:Int
@@ -75,14 +76,6 @@ struct GameView: View {
                                     .foregroundColor(.black)
                                     .frame(width: 50)
                             }
-//                            .alert("Pause", isPresented: $isPause) {
-//                                Button("Continue", role: .cancel){
-//                                    timerStop.toggle()
-//                                    tvm.continueTimer()
-//                                    isPause = false
-//                                    print("continue")
-//                                }
-//                            }
                             
                             
                             Button {
@@ -184,7 +177,7 @@ struct GameView: View {
             .ignoresSafeArea()
             
         }else{
-            MenuView(pvm: pvm)
+            MenuView(pvm: pvm,loggedIn: true)
         }
         
     }
@@ -208,7 +201,9 @@ struct GameView: View {
     func checkRemaining(){
         if remainIndex.count == 0{
             tvm.stopTimer()
-            pvm.player.score += Int(tvm.remainingTime/10000) * pvm.player.gameMode
+            pvm.player.score += Int(tvm.remainingTime/100) * pvm.player.gameMode
+            
+            DataController().addResult(name: pvm.player.name, score: Int64(pvm.player.score), context: moc)
         }
     }
     

@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingView: View {
     @ObservedObject var pvm:PlayerViewModel
     @State var isSetting = true
-    @State var selectedMode: String
+    @State var selectedMode = "Easy"
     
     @State var isChanging = false
     @State var newName = ""
@@ -38,6 +38,7 @@ struct SettingView: View {
                                     }
                                     Button {
                                         pvm.changeName(newName: newName)
+                                        UserDefaults.standard.set(newName, forKey: "currentName")
                                         isChanging = false
                                     } label: {
                                         Text("Submit")
@@ -71,10 +72,13 @@ struct SettingView: View {
                                     switch newValue{
                                     case "Easy":
                                         pvm.player.gameMode = 1
+                                        UserDefaults.standard.set(1, forKey: "currentMode")
                                     case "Normal":
                                         pvm.player.gameMode = 2
+                                        UserDefaults.standard.set(2, forKey: "currentMode")
                                     case "Hard":
                                         pvm.player.gameMode = 3
+                                        UserDefaults.standard.set(3, forKey: "currentMode")
                                     default:
                                         pvm.player.gameMode = 1
                                     }
@@ -102,12 +106,25 @@ struct SettingView: View {
                 }
                 
             }
+            .onAppear{
+                switch pvm.player.gameMode {
+                case 1:
+                    selectedMode = "Easy"
+                case 2:
+                    selectedMode = "Normal"
+                case 3:
+                    selectedMode = "Hard"
+                default:
+                    selectedMode = "Easy"
+                }
+            }
         }else{
-            MenuView(pvm: pvm)
+            MenuView(pvm: pvm,loggedIn: true)
         }
         
          
     }
+    
 }
 
 struct SettingView_Previews: PreviewProvider {
