@@ -33,9 +33,7 @@ class DataController: ObservableObject{
     
     func addResult(name:String , score: Int64, context: NSManagedObjectContext){
         let result = Result(context: context)
-        //let test = Player(context: context)
-        
-        //test.name = name
+
         result.name = name
         result.score=score
         

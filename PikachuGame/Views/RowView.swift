@@ -12,7 +12,6 @@ struct RowView: View {
         NSSortDescriptor(keyPath: \Result.score, ascending: false)
     ]) var results: FetchedResults<Result>
     
-    //@FetchRequest(sortDescriptors: []) var players: FetchedResults<Player>
     
     var body: some View {
        

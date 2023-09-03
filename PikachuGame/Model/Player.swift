@@ -12,6 +12,8 @@ struct Player{
     var score: Int
     var gameMode: Int
     
+    
+    
     init(name: String, score: Int, gameMode: Int) {
         self.name = name
         self.score = score

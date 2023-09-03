@@ -8,6 +8,7 @@
 import Foundation
 
 class PlayerViewModel: ObservableObject{
+    
     @Published var player = Player(name: UserDefaults.standard.string(forKey: "currentName") ?? "BaoNgoc"  , score: 0, gameMode: UserDefaults.standard.integer(forKey: "currentMode") )
     
     func addPoint(increment: Int){

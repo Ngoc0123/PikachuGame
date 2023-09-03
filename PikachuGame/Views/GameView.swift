@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct GameView: View {
-    @ObservedObject var pvm:PlayerViewModel
+    @ObservedObject var pvm: PlayerViewModel
     @Environment (\.managedObjectContext) var moc
+    
+    
     
     var columns:Int
     var rows:Int
@@ -17,6 +19,7 @@ struct GameView: View {
     
     @State var isGaming = true
     @State var isPause = false
+    @State var isWinning = 0
     
     @State var pokemonGrid: [Pokemon]
     @State var selectedPokeGridIndex1: Int = 0
@@ -113,6 +116,7 @@ struct GameView: View {
                     
                     
                     shuffleRemaining()
+                    
                     switch pvm.player.gameMode{
                     case 1:
                         tvm.start(minutes: 5)
@@ -130,7 +134,8 @@ struct GameView: View {
                         if matchingBlocks(index1: selectedPokeGridIndex1, index2: selectedPokeGridIndex2) {
                             removePokemonIndex(index: selectedPokeGridIndex1)
                             removePokemonIndex(index: selectedPokeGridIndex2)
-                            pvm.player.score += 50*pvm.player.gameMode
+                            pvm.addPoint(increment: 50*pvm.player.gameMode)
+                            print("\(pvm.player.score)")
                             checkRemaining()
                         }
                         selecting = 0
@@ -141,6 +146,9 @@ struct GameView: View {
                 .onReceive(timer){ _ in
                     tvm.updateCountDown()
                     
+                    if (tvm.isAlert){
+                        isWinning = -1
+                    }
                 }
                 
                 if isPause {
@@ -171,6 +179,64 @@ struct GameView: View {
                         
                         
                     }
+                }
+                
+                if isWinning == 1{
+                    ZStack{
+                        Color.black
+                            .opacity(0.5)
+                        ZStack{
+                            Image("Box")
+                                .resizable()
+                                .frame(width: 600,height: 400)
+                            VStack(spacing: 10){
+                                Text("You Won!!!")
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                HStack{
+                                    Text("Score: : ")
+                                    Text("\(pvm.player.score)")
+                                }
+                                Button {
+                                    isGaming = false
+                                } label: {
+                                    CustomButton(text: "Back to Meunu", width: 200, height: 30)
+                                }
+                            }
+                            
+                        }
+                        
+                        
+                    }
+                }else if isWinning == -1{
+                    ZStack{
+                        Color.black
+                            .opacity(0.5)
+                        ZStack{
+                            Image("Box")
+                                .resizable()
+                                .frame(width: 600,height: 400)
+                            VStack(spacing: 10){
+                                Text("Game Over")
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                HStack{
+                                    Text("Score: : ")
+                                    Text("\(pvm.player.score)")
+                                }
+                                Button {
+                                    isGaming = false
+                                } label: {
+                                    CustomButton(text: "Back to Meunu", width: 200, height: 30)
+                                }
+                            }
+                            
+                        }
+                        
+                        
+                    }
+                }else{
+                    
                 }
                 
             }
@@ -204,6 +270,7 @@ struct GameView: View {
             pvm.player.score += Int(tvm.remainingTime/100) * pvm.player.gameMode
             
             DataController().addResult(name: pvm.player.name, score: Int64(pvm.player.score), context: moc)
+            isWinning = 1
         }
     }
     

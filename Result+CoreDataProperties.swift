@@ -2,7 +2,7 @@
 //  Result+CoreDataProperties.swift
 //  PikachuGame
 //
-//  Created by Nguyen The Bao Ngoc on 03/09/2023.
+//  Created by Nguyen The Bao Ngoc on 04/09/2023.
 //
 //
 
@@ -16,9 +16,8 @@ extension Result {
         return NSFetchRequest<Result>(entityName: "Result")
     }
 
-    @NSManaged public var score: Int64
     @NSManaged public var name: String?
-    
+    @NSManaged public var score: Int64
 
 }
 
