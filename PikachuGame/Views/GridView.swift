@@ -41,7 +41,7 @@ struct GridView: View {
                 }
             }
         }
-        .frame(width: UIDevice.current.userInterfaceIdiom == .phone ? 360 : 600,height: UIDevice.current.userInterfaceIdiom == .phone ? 320 : 480)
+        .frame(width: 360 ,height:320 )
         
 
     }

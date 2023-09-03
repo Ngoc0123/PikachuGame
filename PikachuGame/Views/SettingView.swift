@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingView: View {
-    @ObservedObject var pvm:PlayerViewModel
+    @Binding var player: Player
     @State var isSetting = true
     @State var selectedMode = "Easy"
     
@@ -34,17 +34,17 @@ struct SettingView: View {
                                 
                                 if isChanging{
                                     TextField(text: $newName) {
-                                        Text(pvm.player.name)
+                                        Text(player.name)
                                     }
                                     Button {
-                                        pvm.changeName(newName: newName)
+                                        player.name = newName
                                         UserDefaults.standard.set(newName, forKey: "currentName")
                                         isChanging = false
                                     } label: {
                                         Text("Submit")
                                     }
                                 }else{
-                                    Text(pvm.player.name)
+                                    Text(player.name)
                                     Button {
                                         isChanging = true
                                     } label: {
@@ -71,16 +71,16 @@ struct SettingView: View {
                                 .onChange(of: selectedMode) { newValue in
                                     switch newValue{
                                     case "Easy":
-                                        pvm.player.gameMode = 1
+                                        player.gameMode = 1
                                         UserDefaults.standard.set(1, forKey: "currentMode")
                                     case "Normal":
-                                        pvm.player.gameMode = 2
+                                        player.gameMode = 2
                                         UserDefaults.standard.set(2, forKey: "currentMode")
                                     case "Hard":
-                                        pvm.player.gameMode = 3
+                                        player.gameMode = 3
                                         UserDefaults.standard.set(3, forKey: "currentMode")
                                     default:
-                                        pvm.player.gameMode = 1
+                                        player.gameMode = 1
                                     }
                                 }
                             }
@@ -107,7 +107,7 @@ struct SettingView: View {
                 
             }
             .onAppear{
-                switch pvm.player.gameMode {
+                switch player.gameMode {
                 case 1:
                     selectedMode = "Easy"
                 case 2:
@@ -119,7 +119,7 @@ struct SettingView: View {
                 }
             }
         }else{
-            MenuView(pvm: pvm,loggedIn: true)
+            MenuView(player: $player,loggedIn: true)
         }
         
          
@@ -129,6 +129,6 @@ struct SettingView: View {
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingView(pvm: PlayerViewModel(),selectedMode: "easy").previewInterfaceOrientation(.landscapeLeft)
+        SettingView(player: .constant(Player(name: "ngoc", gameMode: 1)),selectedMode: "easy").previewInterfaceOrientation(.landscapeLeft)
     }
 }

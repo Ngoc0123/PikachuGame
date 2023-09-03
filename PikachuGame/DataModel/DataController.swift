@@ -9,6 +9,7 @@ import Foundation
 import CoreData
 
 class DataController: ObservableObject{
+
     let container = NSPersistentContainer(name: "PlayerDataModel")
     
     init(){
@@ -18,7 +19,7 @@ class DataController: ObservableObject{
                 return
             }
             
-            self.container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+            //self.container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
         }
     }
     
@@ -40,4 +41,14 @@ class DataController: ObservableObject{
         save(context: context)
     }
     
+}
+
+//Fix warning when it add new result into the context
+extension NSManagedObject {
+    
+    convenience init(context: NSManagedObjectContext) {
+        let name = String(describing: type(of: self))
+        let entity = NSEntityDescription.entity(forEntityName: name, in: context)!
+        self.init(entity: entity, insertInto: context)
+    }
 }

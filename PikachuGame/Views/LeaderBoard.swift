@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct LeaderBoard: View {
-    @ObservedObject var pvm : PlayerViewModel
+    @Binding var player: Player
     @Environment (\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: []) var results: FetchedResults<Result>
     
@@ -64,7 +64,7 @@ struct LeaderBoard: View {
             .ignoresSafeArea()
             
         }else{
-            MenuView(pvm: pvm,loggedIn: true)
+            MenuView(player: $player,loggedIn: true)
         }
         
         
@@ -73,6 +73,6 @@ struct LeaderBoard: View {
 
 struct Test_Previews: PreviewProvider {
     static var previews: some View {
-        LeaderBoard(pvm: PlayerViewModel()).previewInterfaceOrientation(.landscapeLeft)
+        LeaderBoard(player: .constant(Player(name: "Ngoc", gameMode: 1))).previewInterfaceOrientation(.landscapeLeft)
     }
 }

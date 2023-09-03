@@ -10,7 +10,6 @@
 		2F2232012AA3A4C400F14258 /* LeaderBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2232002AA3A4C400F14258 /* LeaderBoard.swift */; };
 		2F2232042AA3A63800F14258 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2232032AA3A63800F14258 /* DataController.swift */; };
 		2F2232082AA45D9E00F14258 /* RowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2232072AA45D9E00F14258 /* RowView.swift */; };
-		2F2232122AA4723800F14258 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2232112AA4723800F14258 /* PlayerViewModel.swift */; };
 		2F2232202AA4880F00F14258 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22321F2AA4880F00F14258 /* Player.swift */; };
 		2F5B85072A860B0D00D5BB39 /* PikachuGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5B85062A860B0D00D5BB39 /* PikachuGameApp.swift */; };
 		2F5B85092A860B0D00D5BB39 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5B85082A860B0D00D5BB39 /* GameView.swift */; };
@@ -35,7 +34,6 @@
 		2F2232002AA3A4C400F14258 /* LeaderBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderBoard.swift; sourceTree = "<group>"; };
 		2F2232032AA3A63800F14258 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		2F2232072AA45D9E00F14258 /* RowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowView.swift; sourceTree = "<group>"; };
-		2F2232112AA4723800F14258 /* PlayerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
 		2F22321F2AA4880F00F14258 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		2F5B85032A860B0D00D5BB39 /* PikachuGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PikachuGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F5B85062A860B0D00D5BB39 /* PikachuGameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PikachuGameApp.swift; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 		2FB305D82AA4E0BD00DE913A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				2F2232112AA4723800F14258 /* PlayerViewModel.swift */,
 				2F5B85202A9520DB00D5BB39 /* TimerViewModel.swift */,
 			);
 			path = ViewModels;
@@ -238,7 +235,6 @@
 				2F5B85162A860EA000D5BB39 /* PokemonBlock.swift in Sources */,
 				2F6DF48B2AA50969005C75C7 /* Result+CoreDataProperties.swift in Sources */,
 				2FE21EC42AA30C82005E38D6 /* CustomButton.swift in Sources */,
-				2F2232122AA4723800F14258 /* PlayerViewModel.swift in Sources */,
 				2F2232042AA3A63800F14258 /* DataController.swift in Sources */,
 				2FB305A22AA4C7F100DE913A /* ArrowButton.swift in Sources */,
 				2F2232082AA45D9E00F14258 /* RowView.swift in Sources */,

@@ -9,14 +9,12 @@ import Foundation
 
 struct Player{
     var name: String
-    var score: Int
     var gameMode: Int
     
     
     
-    init(name: String, score: Int, gameMode: Int) {
+    init(name: String, gameMode: Int) {
         self.name = name
-        self.score = score
         self.gameMode = gameMode
     }
 }

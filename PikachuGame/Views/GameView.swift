@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct GameView: View {
-    @ObservedObject var pvm: PlayerViewModel
+    @Binding var player:Player
     @Environment (\.managedObjectContext) var moc
-    
+    @State var score = 0
     
     
     var columns:Int
@@ -99,7 +99,7 @@ struct GameView: View {
                         VStack{
                             Text("SCORE")
                                 .padding(.top,50)
-                            Text("\(pvm.player.score)")
+                            Text("\(score)")
                             Spacer()
                             
                         }
@@ -110,14 +110,17 @@ struct GameView: View {
                 }
                 .edgesIgnoringSafeArea(.all)
                 .onAppear{
+                    remainPokemon = pokemonGrid
+                    
                     for index in pokemonGrid.indices {
+                        print("\(index)")
                         remainIndex.append(index)
                     }
                     
                     
                     shuffleRemaining()
                     
-                    switch pvm.player.gameMode{
+                    switch player.gameMode{
                     case 1:
                         tvm.start(minutes: 5)
                     case 2:
@@ -134,8 +137,8 @@ struct GameView: View {
                         if matchingBlocks(index1: selectedPokeGridIndex1, index2: selectedPokeGridIndex2) {
                             removePokemonIndex(index: selectedPokeGridIndex1)
                             removePokemonIndex(index: selectedPokeGridIndex2)
-                            pvm.addPoint(increment: 50*pvm.player.gameMode)
-                            print("\(pvm.player.score)")
+                            score += 50
+                            print("\(score)")
                             checkRemaining()
                         }
                         selecting = 0
@@ -195,7 +198,7 @@ struct GameView: View {
                                     .fontWeight(.bold)
                                 HStack{
                                     Text("Score: : ")
-                                    Text("\(pvm.player.score)")
+                                    Text("\(score)")
                                 }
                                 Button {
                                     isGaming = false
@@ -222,7 +225,7 @@ struct GameView: View {
                                     .fontWeight(.bold)
                                 HStack{
                                     Text("Score: : ")
-                                    Text("\(pvm.player.score)")
+                                    Text("\(score)")
                                 }
                                 Button {
                                     isGaming = false
@@ -243,33 +246,21 @@ struct GameView: View {
             .ignoresSafeArea()
             
         }else{
-            MenuView(pvm: pvm,loggedIn: true)
+            MenuView(player: $player,loggedIn: true)
         }
         
     }
     
     
-    init(vm: PlayerViewModel,stage: Int) {
-        self.pvm = vm
-        self.columns = stage * 4
-        self.rows = stage * 3
 
-        let pokes = PokemonModel().generatePokemonArray(mode: stage)
-
-        self.pokemonGrid = pokes
-
-        self.i = 0
-        self.remainPokemon = pokes
-        self.remainIndex = []
-    }
 
 
     func checkRemaining(){
         if remainIndex.count == 0{
             tvm.stopTimer()
-            pvm.player.score += Int(tvm.remainingTime/100) * pvm.player.gameMode
+            score += Int(tvm.remainingTime/100) * player.gameMode
             
-            DataController().addResult(name: pvm.player.name, score: Int64(pvm.player.score), context: moc)
+            DataController().addResult(name: player.name, score: Int64(score), context: moc)
             isWinning = 1
         }
     }
@@ -278,6 +269,7 @@ struct GameView: View {
         remainIndex.shuffle()
         
         for index in remainIndex.indices{
+            print("\(index)")
             pokemonGrid[remainIndex[index]] = remainPokemon[index]
         }
     }
@@ -563,8 +555,8 @@ struct GameView: View {
     
 }
 
-struct GameView_Previews: PreviewProvider {
-    static var previews: some View {
-        GameView(vm: PlayerViewModel(),stage: 3)
-    }
-}
+//struct GameView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        GameView(player: .constant(Player(name: "Ngoc", gameMode: 1)) ,stage: 3)
+//    }
+//}

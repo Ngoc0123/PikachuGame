@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MenuView: View {
-    @ObservedObject var pvm : PlayerViewModel
+    @Binding var player: Player
     
     @State var stage = 1
     @State var view = "menu"
@@ -23,15 +23,16 @@ struct MenuView: View {
             
         case "game":
             VStack{
-                GameView(vm: pvm,stage: stage)
+                //GameView(player: player,stage: stage)
+                GameView(player: $player, columns: stage*4, rows: stage * 3, pokemonGrid: PokemonModel().generatePokemonArray(mode: stage), i: 0, remainPokemon: [], remainIndex: [])
             }
         case "leaderboard":
             VStack{
-                LeaderBoard(pvm: pvm)
+                LeaderBoard(player: $player)
             }
         case "setting":
             VStack{
-                SettingView(pvm: pvm)
+                SettingView(player: $player)
             }
         default:
             ZStack{
@@ -114,7 +115,7 @@ struct MenuView: View {
                                 if inputUsername == ""{
                                     promptText = "Please enter your username"
                                 }else{
-                                    pvm.changeName(newName: inputUsername)
+                                    player.name = inputUsername
                                     loggedIn = true
                                 }
                                 
@@ -128,9 +129,6 @@ struct MenuView: View {
                 }
                 
             }
-            .onAppear{
-                pvm.player.score = 0
-            }
         }
             
             
@@ -141,6 +139,6 @@ struct MenuView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuView(pvm: PlayerViewModel(),loggedIn: false).previewInterfaceOrientation(.landscapeLeft)
+        MenuView(player: .constant(Player(name: "Ngoc", gameMode: 2)),loggedIn: false).previewInterfaceOrientation(.landscapeLeft)
     }
 }
