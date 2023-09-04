@@ -10,6 +10,11 @@ import SwiftUI
 struct GameView: View {
     @Binding var player:Player
     @Environment (\.managedObjectContext) var moc
+    
+    @State var language = UserDefaults.standard.string(forKey: "Language")
+    
+    @State var isHighscore = false
+    
     @State var score = 0
     
     
@@ -51,11 +56,6 @@ struct GameView: View {
                     HStack{
 
                         TimerBar(diff: tvm.diff)
-                            .alert("Game Over", isPresented: $tvm.isAlert) {
-                                Button("reset", role: .cancel){
-                                    isGaming = false
-                                }
-                            }
                             .padding(.top,20)
             
 
@@ -168,13 +168,15 @@ struct GameView: View {
                                     tvm.continueTimer()
                                     isPause = false
                                     print("continue")
+                                    print(language)
                                 } label: {
-                                    Text("Continue")
+                                    
+                                    CustomButton(text: language == "english" ? "Continue" : "Tiếp tục", width: 200, height: 40)
                                 }
                                 Button {
                                     isGaming = false
                                 } label: {
-                                    Text("Back")
+                                    CustomButton(text: language == "english" ? "Back to Menu" : "Quay về Menu", width: 200, height: 40)
                                 }
 
                             }
@@ -199,9 +201,24 @@ struct GameView: View {
                                 HStack{
                                     Text("Score: : ")
                                     Text("\(score)")
+                                    
+                                    if isHighscore{
+                                        Image("crown")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 50)
+                                            .foregroundColor(.yellow)
+                                    }
                                 }
                                 Button {
+                                    if player.progression < columns/4 {
+                                        player.progression = columns/4
+                                    }
+                                    
+                                    player.won += 1
+                                    player.matches += 1
                                     isGaming = false
+                                    DataController().savePlayer(player: player, context: moc)
                                 } label: {
                                     CustomButton(text: "Back to Meunu", width: 200, height: 30)
                                 }
@@ -228,6 +245,8 @@ struct GameView: View {
                                     Text("\(score)")
                                 }
                                 Button {
+                                    player.matches += 1
+                                    DataController().savePlayer(player: player, context: moc)
                                     isGaming = false
                                 } label: {
                                     CustomButton(text: "Back to Meunu", width: 200, height: 30)
@@ -259,6 +278,14 @@ struct GameView: View {
         if remainIndex.count == 0{
             tvm.stopTimer()
             score += Int(tvm.remainingTime/100) * player.gameMode
+            print("\(tvm.remainingTime/100)")
+            
+            if score > player.highscore {
+                player.highscore = score
+                print("new highscore")
+                isHighscore = true
+            }
+            
             
             DataController().addResult(name: player.name, score: Int64(score), context: moc)
             isWinning = 1

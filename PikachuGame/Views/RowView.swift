@@ -12,6 +12,7 @@ struct RowView: View {
         NSSortDescriptor(keyPath: \Result.score, ascending: false)
     ]) var results: FetchedResults<Result>
     
+    @FetchRequest(sortDescriptors: []) var players: FetchedResults<PlayerData>
     
     var body: some View {
        
@@ -27,16 +28,18 @@ struct RowView: View {
                     Text("\(result.score)")
                         .frame(width: 50)
                         .offset(x: 20)
-                    
+
                 }
-                
             }
             .listRowBackground(Color.clear)
             
         }
+        .frame(maxHeight: 200)
         .scrollContentBackground(.hidden)
         .background{
-            Color.clear
+            Color(red:156/255,green: 240/255, blue:226/255)
+                .opacity(0.6)
+            
         }
         
         

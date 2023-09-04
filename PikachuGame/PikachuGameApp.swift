@@ -10,7 +10,7 @@ import SwiftUI
 
 @main
 struct PikachuGameApp: App {
-    @State var player = Player(name: "", gameMode: 1)
+    @State var player = Player(name: "", gameMode: 1, progression: 0, highscore: 0, matches: 0, won: 0)
     @StateObject private var dataController = DataController()
     
     var body: some Scene {

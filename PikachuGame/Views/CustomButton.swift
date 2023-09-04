@@ -25,9 +25,23 @@ struct CustomButton: View {
                 .frame(width: width, height: height)
            
             
-            Text(text)
-                .fontWeight(.bold)
-                .foregroundColor(.black)
+            if text != "" {
+                Text(text)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+            }else{
+                ZStack{
+                    Color.black
+                        .frame(width: width+10, height: height+10)
+                        .opacity(0.5)
+                    Image(systemName: "lock.square")
+                        .resizable()
+                        .frame(width: width+10, height: height+10)
+                        .foregroundColor(.black)
+                }
+                
+            }
+            
         }
         
         
