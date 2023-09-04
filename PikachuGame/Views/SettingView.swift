@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct SettingView: View {
     @FetchRequest(sortDescriptors: []) var players: FetchedResults<PlayerData>
@@ -37,7 +38,11 @@ struct SettingView: View {
                 VStack{
                     HStack{
                         Button {
-                            isSetting = false
+                            AudioServicesPlaySystemSound(1104)
+                            withAnimation {
+                                isSetting = false
+                            }
+                            
                             DataController().savePlayer(player: player, context: moc)
                         } label: {
                             Image("BackArrow")
@@ -45,15 +50,23 @@ struct SettingView: View {
                                 .scaledToFit()
                                 .frame(maxWidth: 50)
                         }
+                        .padding(.leading, 30)
                         
                         
                         Image(language == "english" ? "Setting" : "CaiDat")
                             .resizable()
                             .scaledToFit()
                             .frame(height: 100)
+                            .offset(x: 200)
+                        
+                        Spacer()
                     }
                     
                     ZStack{
+                        Image("Box")
+                            .resizable()
+                
+                            .frame(width: 600,height: 250)
                         VStack(spacing: 5){
                             
                             VStack(alignment: .leading,spacing: 15){
@@ -68,12 +81,14 @@ struct SettingView: View {
                                         }
                                         .frame(width: 100)
                                         Button {
+                                            AudioServicesPlaySystemSound(1104)
                                             if newName == "" {
                                                 isAlert = true
                                                 isChanging = false
                                                 return
                                             }
                                             player = DataController().searchFor(name: newName, context: moc)
+                                            print("\(player.gameMode)")
                                             
                                             UserDefaults.standard.set(newName, forKey: "currentName")
                                             isChanging = false
@@ -85,6 +100,7 @@ struct SettingView: View {
                                                 .shadow(radius: 10)
                                         }
                                         Button {
+                                            AudioServicesPlaySystemSound(1104)
                                             newName = ""
                                             isChanging = false
                                         } label: {
@@ -98,6 +114,7 @@ struct SettingView: View {
                                         Text(player.name)
                                             .frame(width: 100)
                                         Button {
+                                            AudioServicesPlaySystemSound(1104)
                                             isChanging = true
                                         } label: {
                                             Text("Change")
@@ -145,7 +162,10 @@ struct SettingView: View {
                                         
                                     }
                                     
-                                    Button(action: {isDisplay = true}){
+                                    Button(action: {
+                                        AudioServicesPlaySystemSound(1104)
+                                        isDisplay = true}
+                                    ){
                                         Image(systemName: "questionmark.circle")
                                             .foregroundColor(.black)
                                             .frame(width: 50)
@@ -153,10 +173,12 @@ struct SettingView: View {
                                         
                                     }.popover(isPresented: $isDisplay, attachmentAnchor: .point(.center),arrowEdge: .leading) {
                                         VStack{
+                                            Text(language == "english" ? "The harder it get, The higher score you get" : "Độ khó càng lớn, điểm thưởng càng cao")   
                                             HStack(spacing: 50){
                                                 VStack(alignment: .center){
                                                     Text(language == "english" ? "Difficulty" : "Độ khó")
                                                         .fontWeight(.bold)
+                                                                           
                                                     Divider()
                                                         .frame(maxWidth: 100)
                                                     Text(language == "english" ? "Easy" : "Dễ")
@@ -166,13 +188,13 @@ struct SettingView: View {
                                                 Divider()
                                                     .frame(maxHeight: 100)
                                                 VStack(alignment: .center){
-                                                    Text("Pokemon Matrix")
+                                                    Text(language == "english" ? "Time" : "Thời gian")
                                                         .fontWeight(.bold)
                                                     Divider()
                                                         .frame(maxWidth: 100)
-                                                    Text("3 X 4")
-                                                    Text("6 X 8")
-                                                    Text("9 X 12")
+                                                    Text(language == "english" ? "5 minutes" : "5 phút")
+                                                    Text(language == "english" ? "4 minutes" : "4 phút")
+                                                    Text(language == "english" ? "3 minutes" : "3 phút")
                                                 }
                                             }
                                             

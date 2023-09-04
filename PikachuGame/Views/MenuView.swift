@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import AVFoundation
 
 struct MenuView: View {
     @FetchRequest(sortDescriptors: []) var players: FetchedResults<PlayerData>
@@ -39,6 +40,7 @@ struct MenuView: View {
         case "setting":
             VStack{
                 SettingView(player: $player)
+                    
             }
         default:
             ZStack{
@@ -54,8 +56,12 @@ struct MenuView: View {
                     
                     HStack(spacing: 50){
                         Button {
+                            AudioServicesPlaySystemSound(1104)
                             stage = 1
-                            view = "game"
+                            withAnimation {
+                                view = "game"
+                            }
+                            
                         } label: {
                             CustomButton(text: "1", width: 50, height: 50)
                             
@@ -63,13 +69,18 @@ struct MenuView: View {
                         
                         if player.progression >= 1 {
                             Button {
+                                AudioServicesPlaySystemSound(1104)
                                 stage = 2
-                                view = "game"
+                                withAnimation {
+                                    view = "game"
+                                }
                             } label: {
                                 CustomButton(text: "2", width: 50, height: 50)
                             }
                         }else{
+                            
                             Button {
+                                AudioServicesPlaySystemSound(1104)
                                 errorText = (language == "english" ? "Complete stage 1 to unlock!" : "Hoàn thành màn 1 để mở khoá!")
                             } label: {
                                 CustomButton(text: "", width: 50, height: 50)
@@ -78,13 +89,17 @@ struct MenuView: View {
                         
                         if player.progression >= 2 {
                             Button {
+                                AudioServicesPlaySystemSound(1104)
                                 stage = 3
-                                view = "game"
+                                withAnimation {
+                                    view = "game"
+                                }
                             } label: {
                                 CustomButton(text: "3", width: 50, height: 50)
                             }
                         }else{
                             Button {
+                                AudioServicesPlaySystemSound(1104)
                                 errorText = (language == "english" ? "Complete stage 2 to unlock!" : "Hoàn thành màn 2 để mở khoá!")
                                 
                             } label: {
@@ -108,18 +123,25 @@ struct MenuView: View {
                     
                     HStack{
                         Button {
-                            view = "leaderboard"
+                            AudioServicesPlaySystemSound(1104)
+                            withAnimation {
+                                view = "leaderboard"
+                            }
                         } label: {
                             CustomButton(text: (language == "english" ? "Leaderboard" : "Bảng Xếp Hạng"), width: 150, height: 40)
                         }
                         Button {
-                            
+                            AudioServicesPlaySystemSound(1001)
                         } label: {
                             CustomButton(text: (language == "english" ? "How to play" : "Hướng dẫn"), width: 150, height: 40)
                           
                         }
                         Button {
-                            view = "setting"
+                            AudioServicesPlaySystemSound(1104)
+                            withAnimation {
+                                view = "setting"
+                            }
+                            
                         } label: {
                             CustomButton(text: (language == "english" ? "Setting" : "Cài đặt"), width: 150, height: 40)
                         }
@@ -148,6 +170,7 @@ struct MenuView: View {
                     }
 
                 }
+                
                 
                 
                 
@@ -194,6 +217,7 @@ struct MenuView: View {
                 }
                 
             }
+            .transition(.push(from: .top))
         }
             
             

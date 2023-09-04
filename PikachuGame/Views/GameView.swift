@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct GameView: View {
     @Binding var player:Player
@@ -25,6 +26,8 @@ struct GameView: View {
     @State var isGaming = true
     @State var isPause = false
     @State var isWinning = 0
+    
+    @State var showAchievement = false
     
     @State var pokemonGrid: [Pokemon]
     @State var selectedPokeGridIndex1: Int = 0
@@ -66,10 +69,13 @@ struct GameView: View {
                     HStack(spacing: 50){
                         VStack{
                             Button {
-                                
+                                AudioServicesPlaySystemSound(1104)
                                 timerStop.toggle()
                                 tvm.stopTimer()
-                                isPause = true
+                                withAnimation {
+                                    isPause = true
+                                }
+                                
                                 print("stop")
                                 
                             } label: {
@@ -82,6 +88,7 @@ struct GameView: View {
                             
                             
                             Button {
+                                AudioServicesPlaySystemSound(1104)
                                 self.shuffleRemaining()
                             } label: {
                                 Image(systemName: "arrow.counterclockwise.circle")
@@ -97,7 +104,7 @@ struct GameView: View {
                         GridView(pokemonGrid: pokemonGrid, selectedPokeGridIndex1: $selectedPokeGridIndex1, selectedPokeGridIndex2: $selectedPokeGridIndex2, selecting: $selecting, columns: columns, rows: rows)
                 
                         VStack{
-                            Text("SCORE")
+                            Text(language == "english" ? "SCORE" : "ĐIỂM SỐ")
                                 .padding(.top,50)
                             Text("\(score)")
                             Spacer()
@@ -150,7 +157,10 @@ struct GameView: View {
                     tvm.updateCountDown()
                     
                     if (tvm.isAlert){
-                        isWinning = -1
+                        withAnimation {
+                            isWinning = -1
+                        }
+                        
                     }
                 }
                 
@@ -163,18 +173,27 @@ struct GameView: View {
                                 .resizable()
                                 .frame(width: 600,height: 400)
                             VStack{
+                                Text(language == "english" ? "Pause!!" : "Tạm dừng!!")
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
                                 Button {
+                                    AudioServicesPlaySystemSound(1104)
                                     timerStop.toggle()
                                     tvm.continueTimer()
-                                    isPause = false
-                                    print("continue")
-                                    print(language)
+                                    withAnimation {
+                                        isPause = false
+                                    }
+                                    
                                 } label: {
                                     
                                     CustomButton(text: language == "english" ? "Continue" : "Tiếp tục", width: 200, height: 40)
                                 }
                                 Button {
-                                    isGaming = false
+                                    AudioServicesPlaySystemSound(1104)
+                                    withAnimation {
+                                        isGaming = false
+                                    }
+                                    
                                 } label: {
                                     CustomButton(text: language == "english" ? "Back to Menu" : "Quay về Menu", width: 200, height: 40)
                                 }
@@ -184,6 +203,7 @@ struct GameView: View {
                         
                         
                     }
+                    .transition(.opacity)
                 }
                 
                 if isWinning == 1{
@@ -195,29 +215,50 @@ struct GameView: View {
                                 .resizable()
                                 .frame(width: 600,height: 400)
                             VStack(spacing: 10){
-                                Text("You Won!!!")
+                                Text(language == "english" ? "🥳Victory!!!🥳" : "🥳Chiến Thắng!!!🥳")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
-                                HStack{
-                                    Text("Score: : ")
-                                    Text("\(score)")
-                                    
-                                    if isHighscore{
+                                if isHighscore{
+                                    HStack{
                                         Image("crown")
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(width: 50)
-                                            .foregroundColor(.yellow)
+                                            .frame(width: 80)
+                                        Text(language == "english" ? "New Highscore" : "Điểm cao mới")
+                                            .font(.largeTitle)
+                                        Image("crown")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 80)
+                                            
                                     }
+                                    .frame(maxHeight: 100)
+                                    
+                                    Text("\(score)")
+                                        .font(.largeTitle)
+                                    
+                                }else{
+                                    VStack{
+                                        Text(language == "english" ? "Score" : "Điểm số")
+                                            .font(.largeTitle)
+                                        Text("\(score)")
+                                            .font(.largeTitle)
+                                }
+                                
+                                    
+                                    
                                 }
                                 Button {
+                                    AudioServicesPlaySystemSound(1104)
                                     if player.progression < columns/4 {
                                         player.progression = columns/4
                                     }
                                     
                                     player.won += 1
                                     player.matches += 1
-                                    isGaming = false
+                                    withAnimation {
+                                        isGaming = false
+                                    }
                                     DataController().savePlayer(player: player, context: moc)
                                 } label: {
                                     CustomButton(text: "Back to Meunu", width: 200, height: 30)
@@ -228,6 +269,7 @@ struct GameView: View {
                         
                         
                     }
+                    .transition(.opacity)
                 }else if isWinning == -1{
                     ZStack{
                         Color.black
@@ -237,17 +279,20 @@ struct GameView: View {
                                 .resizable()
                                 .frame(width: 600,height: 400)
                             VStack(spacing: 10){
-                                Text("Game Over")
+                                Text(language == "english" ? "😭Game Over😭" : "😭Thất Bại😭")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                 HStack{
-                                    Text("Score: : ")
+                                    Text(language == "english" ? "Score: " : "Điểm số: ")
                                     Text("\(score)")
                                 }
                                 Button {
+                                    AudioServicesPlaySystemSound(1104)
                                     player.matches += 1
                                     DataController().savePlayer(player: player, context: moc)
-                                    isGaming = false
+                                    withAnimation {
+                                        isGaming = false
+                                    }
                                 } label: {
                                     CustomButton(text: "Back to Meunu", width: 200, height: 30)
                                 }
@@ -257,12 +302,22 @@ struct GameView: View {
                         
                         
                     }
-                }else{
-                    
                 }
                 
+
+                
+                if showAchievement{
+                    PopupAchievementView(showAchievement: $showAchievement, id: columns/4)
+                        
+                }
+                    
+                
+
+                
             }
+            
             .ignoresSafeArea()
+
             
         }else{
             MenuView(player: $player,loggedIn: true)
@@ -279,6 +334,7 @@ struct GameView: View {
             tvm.stopTimer()
             score += Int(tvm.remainingTime/100) * player.gameMode
             print("\(tvm.remainingTime/100)")
+            print("\(player.gameMode)")
             
             if score > player.highscore {
                 player.highscore = score
@@ -286,9 +342,17 @@ struct GameView: View {
                 isHighscore = true
             }
             
-            
+            if player.progression < columns/4 {
+                withAnimation {
+                    showAchievement = true
+                }
+                
+            }
             DataController().addResult(name: player.name, score: Int64(score), context: moc)
-            isWinning = 1
+            withAnimation {
+                isWinning = 1
+            }
+            
         }
     }
     

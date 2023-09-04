@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct PokemonBlock: View {
     var index: Int
@@ -52,7 +53,7 @@ struct PokemonBlock: View {
                 }
             })
             .onTapGesture {
-               
+                AudioServicesPlaySystemSound(1105)
                 if tapped {
                     tapped = false
                     selecting -= 1

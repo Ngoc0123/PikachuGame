@@ -28,6 +28,8 @@
 		2FBCAAE02AA520B40060CFAD /* PlayerData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBCAADE2AA520B40060CFAD /* PlayerData+CoreDataClass.swift */; };
 		2FBCAAE12AA520B40060CFAD /* PlayerData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBCAADF2AA520B40060CFAD /* PlayerData+CoreDataProperties.swift */; };
 		2FBCAAE32AA5D1D30060CFAD /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBCAAE22AA5D1D30060CFAD /* ProfileView.swift */; };
+		2FBCAAE52AA622760060CFAD /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBCAAE42AA622760060CFAD /* Achievement.swift */; };
+		2FBCAAE72AA62D310060CFAD /* PopupAchievementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBCAAE62AA62D310060CFAD /* PopupAchievementView.swift */; };
 		2FE21EC22AA30899005E38D6 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE21EC12AA30899005E38D6 /* SettingView.swift */; };
 		2FE21EC42AA30C82005E38D6 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE21EC32AA30C82005E38D6 /* CustomButton.swift */; };
 		2FE21EC72AA371FC005E38D6 /* PlayerDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2FE21EC52AA371FC005E38D6 /* PlayerDataModel.xcdatamodeld */; };
@@ -57,6 +59,8 @@
 		2FBCAADE2AA520B40060CFAD /* PlayerData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2FBCAADF2AA520B40060CFAD /* PlayerData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2FBCAAE22AA5D1D30060CFAD /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		2FBCAAE42AA622760060CFAD /* Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
+		2FBCAAE62AA62D310060CFAD /* PopupAchievementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAchievementView.swift; sourceTree = "<group>"; };
 		2FE21EC12AA30899005E38D6 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		2FE21EC32AA30C82005E38D6 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		2FE21EC62AA371FC005E38D6 /* PlayerDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PlayerDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -136,10 +140,12 @@
 				2F2232002AA3A4C400F14258 /* LeaderBoard.swift */,
 				2F2232072AA45D9E00F14258 /* RowView.swift */,
 				2FE21EC12AA30899005E38D6 /* SettingView.swift */,
+				2FBCAAE62AA62D310060CFAD /* PopupAchievementView.swift */,
 				2F5B85082A860B0D00D5BB39 /* GameView.swift */,
 				2F5B85172A86202100D5BB39 /* GridView.swift */,
 				2F5B85152A860E9F00D5BB39 /* PokemonBlock.swift */,
 				2FE21EC32AA30C82005E38D6 /* CustomButton.swift */,
+				2FBCAAE42AA622760060CFAD /* Achievement.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -235,8 +241,10 @@
 				2F5B85212A9520DB00D5BB39 /* TimerViewModel.swift in Sources */,
 				2F5B851A2A8693F600D5BB39 /* Pokemon.swift in Sources */,
 				2F2232012AA3A4C400F14258 /* LeaderBoard.swift in Sources */,
+				2FBCAAE72AA62D310060CFAD /* PopupAchievementView.swift in Sources */,
 				2F5B85092A860B0D00D5BB39 /* GameView.swift in Sources */,
 				2F5B851F2A8923A100D5BB39 /* MenuView.swift in Sources */,
+				2FBCAAE52AA622760060CFAD /* Achievement.swift in Sources */,
 				2F5B85072A860B0D00D5BB39 /* PikachuGameApp.swift in Sources */,
 				2F2232202AA4880F00F14258 /* Player.swift in Sources */,
 				2F5B85182A86202100D5BB39 /* GridView.swift in Sources */,

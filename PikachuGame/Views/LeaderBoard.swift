@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import AVFoundation
 
 struct LeaderBoard: View {
     @Binding var player: Player
@@ -26,7 +27,11 @@ struct LeaderBoard: View {
                 VStack{
                     HStack(alignment: .center){
                         Button {
-                            isLearderboard = false
+                            AudioServicesPlaySystemSound(1104)
+                            withAnimation {
+                                isLearderboard = false
+                            }
+                            
                         } label: {
                             Image("BackArrow")
                                 .resizable()
@@ -44,7 +49,10 @@ struct LeaderBoard: View {
                        
                         Spacer()
                         
-                        Button(action: {isFiltering = true}){
+                        Button(action: {
+                            AudioServicesPlaySystemSound(1104)
+                            isFiltering = true}
+                        ){
                             Image("ProfileButton")
                                 .resizable().scaledToFit().frame(width: 50)
                                 .padding(.trailing,50)

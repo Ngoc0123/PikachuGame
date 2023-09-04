@@ -15,34 +15,53 @@ struct ProfileView: View {
             Text(language == "english" ? "Profile" : "Hồ sơ")
                 .font(.title)
                 .fontWeight(.bold)
-            
-            HStack(spacing: 50){
-                VStack(alignment: .leading){
-                    Text(language == "english" ? "Username: " : "Người chơi: ")
-                        .fontWeight(.bold)
-                    Text(language == "english" ? "Matches played: : " : "Đã chơi: ")
-                        .fontWeight(.bold)
-                    Text(language == "english" ? "Winrate: " : "Tỉ lệ thắng: ")
-                        .fontWeight(.bold)
-                    Text(language == "english" ? "Highestscore: " : "Điểm cao: ")
-                        .fontWeight(.bold)
-                    
-                }
-                VStack(alignment: .trailing){
-                    Text(player.name)
-                    Text("\(player.matches)")
-                    Text("\((player.won / (player.matches == 0 ? 1 : player.matches)) * 100) %")
-                    Text("\(player.highscore)")
-                }
+            VStack(alignment: .leading){
+                HStack(spacing: 50){
+                    VStack(alignment: .leading){
+                        Text(language == "english" ? "Username: " : "Người chơi: ")
+                            .fontWeight(.bold)
+                        Text(language == "english" ? "Matches played: : " : "Đã chơi: ")
+                            .fontWeight(.bold)
+                        Text(language == "english" ? "Winrate: " : "Tỉ lệ thắng: ")
+                            .fontWeight(.bold)
+                        Text(language == "english" ? "Highestscore: " : "Điểm cao: ")
+                            .fontWeight(.bold)
+                        
+                        
+                        
+                    }
+                    VStack(alignment: .trailing){
+                        Text(player.name)
+                        Text("\(player.matches)")
+                        Text("\((player.won / (player.matches == 0 ? 1 : player.matches)) * 100) %")
+                        Text("\(player.highscore)")
+                    }
 
+                }
+                
+                Text(language == "english" ? "Achievement: " : "Thành tựu:")
+                    .fontWeight(.bold)
+                
             }
-        
             
+            VStack{
+                TabView{
+                    ForEach(1..<4){index in
+                            ZStack{
+                                Achievement(progress: player.progression, id:index)
+                            }
+                    }
+                    
+                }.tabViewStyle(PageTabViewStyle())
+                    .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
+            }.frame(maxWidth: 50,maxHeight: 80)
             
         }
-        .frame(minWidth: 400, maxHeight: 600)
+        .frame(minWidth: 300, minHeight: 300)
         .background(Color(red:224/255, green:205/255,blue: 110/255))
         .presentationCompactAdaptation(.popover)
+        
+       
     }
 }
 
