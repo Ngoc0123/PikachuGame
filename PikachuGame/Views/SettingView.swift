@@ -13,8 +13,8 @@ struct SettingView: View {
     @State var playerIndex = -1
     @Environment (\.managedObjectContext) var moc
     
-    @State var language = UserDefaults.standard.string(forKey: "Language")
-    @State var theme = UserDefaults.standard.string(forKey: "theme")!
+    @State var language = UserDefaults.standard.string(forKey: "Language") ?? "english"
+    @State var theme = UserDefaults.standard.string(forKey: "theme") ?? "light"
     
     @State var selectedLanguage: String = "English"
     let languageMode = ["English", "Tiếng Việt"]

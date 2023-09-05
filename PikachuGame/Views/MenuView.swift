@@ -23,7 +23,7 @@ struct MenuView: View {
     @State var inputUsername = ""
     @State var isAlert = false
     @State var errorText = ""
-    @State var language = ""
+    @State var language = "english"
 
     var body: some View {
         
@@ -166,7 +166,7 @@ struct MenuView: View {
                         player = DataController().searchFor(name: UserDefaults.standard.string(forKey: "currentName")!, context: moc)
                         player.gameMode = UserDefaults.standard.integer(forKey: "currentMode")
                         
-                        theme = UserDefaults.standard.string(forKey: "theme")!
+                        theme = UserDefaults.standard.string(forKey: "theme") ?? "light"
                         language = UserDefaults.standard.string(forKey: "Language")!
                     }else{
                         player.gameMode = 1

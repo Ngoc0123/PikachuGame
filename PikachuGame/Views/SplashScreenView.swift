@@ -35,8 +35,6 @@ struct SplashScreenView: View {
                     opacity =  1
                 }
             }
-            
-                
         }
         .onAppear{
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {

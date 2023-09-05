@@ -16,8 +16,8 @@ struct LeaderBoard: View {
     
     @State var isFiltering = false
     @State var isLearderboard = true
-    let language = UserDefaults.standard.string(forKey: "Language")
-    let theme = UserDefaults.standard.string(forKey: "theme")!
+    let language = UserDefaults.standard.string(forKey: "Language") ?? "english"
+    let theme = UserDefaults.standard.string(forKey: "theme") ?? "light"
 
     var body: some View {
         if isLearderboard {

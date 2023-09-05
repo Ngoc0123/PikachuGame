@@ -141,7 +141,6 @@
 				2FB305D62AA4E07700DE913A /* Views */,
 				2F2232022AA3A62400F14258 /* DataModel */,
 				2F5B85062A860B0D00D5BB39 /* PikachuGameApp.swift */,
-				2F5B85222A96644400D5BB39 /* TimerBar.swift */,
 				2F5B851C2A86979500D5BB39 /* pokemon.json */,
 				2F5B850A2A860B0E00D5BB39 /* Assets.xcassets */,
 				2F5B850C2A860B0E00D5BB39 /* PikachuGame.entitlements */,
@@ -161,6 +160,7 @@
 		2FB305D62AA4E07700DE913A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2F5B85222A96644400D5BB39 /* TimerBar.swift */,
 				2FA015F12AA771D700C9AD21 /* SplashScreenView.swift */,
 				2FBCAAE22AA5D1D30060CFAD /* ProfileView.swift */,
 				2FB305A12AA4C7F100DE913A /* ArrowButton.swift */,
@@ -173,7 +173,6 @@
 				2F5B85082A860B0D00D5BB39 /* GameView.swift */,
 				2F4FDE2D2AA7270C0082B662 /* OutOfShuffleView.swift */,
 				2F4FDE2B2AA7206B0082B662 /* AvailableView.swift */,
-				2FBCAAE82AA660D00060CFAD /* PlaySound.swift */,
 				2F5B85172A86202100D5BB39 /* GridView.swift */,
 				2F5B85152A860E9F00D5BB39 /* PokemonBlock.swift */,
 				2FE21EC32AA30C82005E38D6 /* CustomButton.swift */,
@@ -185,6 +184,7 @@
 		2FB305D72AA4E07E00DE913A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2FBCAAE82AA660D00060CFAD /* PlaySound.swift */,
 				2F22321F2AA4880F00F14258 /* Player.swift */,
 				2F5B85192A8693F600D5BB39 /* Pokemon.swift */,
 			);

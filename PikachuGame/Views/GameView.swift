@@ -12,8 +12,8 @@ struct GameView: View {
     @Binding var player:Player
     @Environment (\.managedObjectContext) var moc
     
-    let language = UserDefaults.standard.string(forKey: "Language")
-    let theme = UserDefaults.standard.string(forKey: "theme")!
+    let language = UserDefaults.standard.string(forKey: "Language") ?? "english"
+    let theme = UserDefaults.standard.string(forKey: "theme") ?? "light"
     
     @State var shuffle = 0
     @State var score = 0
