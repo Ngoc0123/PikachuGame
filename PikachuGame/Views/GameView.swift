@@ -493,8 +493,18 @@ struct GameView: View {
         if x1 == x2 {
             return true
         }
+        
+        if (y == -1 || y == rows){
+            return true
+        }
 
         for index in x1+1..<x2{
+            if index == -1{
+                continue
+            }
+            if index == columns{
+                continue
+            }
             if pokemonGrid[index+y*columns].id != -1{
                 return false
             }
@@ -507,8 +517,11 @@ struct GameView: View {
         if y1 == y2 {
             return true
         }
-
+        if (x == columns || x == -1){
+            return true
+        }
         for index in y1+1..<y2{
+            
             if(index == -1 ){
                 continue
             }
@@ -534,6 +547,7 @@ struct GameView: View {
     }
     
     func checkHRectangle(index1: Int, index2: Int) -> Bool{
+        print("check Hrec")
 
         var u,d:Int
 
@@ -546,8 +560,13 @@ struct GameView: View {
             
         }
         
-        
+
+        if (getXCoordinate(index: index2) - getXCoordinate(index: index1) == 1){
+            return false
+        }
+
         for col in getXCoordinate(index: index1)+1..<getXCoordinate(index: index2){
+
             if checkCol(y1: getYCoordinate(index: u) - 1, y2: getYCoordinate(index: d) + 1, x: col){
                 if checkRow(x1: getXCoordinate(index: index1), x2: col+1, y: getYCoordinate(index: index1)) &&
                     checkRow(x1: col-1, x2: getXCoordinate(index: index2), y: getYCoordinate(index: index2))
@@ -572,6 +591,9 @@ struct GameView: View {
             
         }
         
+        if (getYCoordinate(index: index2) - getYCoordinate(index: index1)) == 1{
+            return false
+        }
         
         for row in getYCoordinate(index: index1)+1..<getYCoordinate(index: index2){
             if checkRow(x1: getXCoordinate(index: l) - 1, x2: getXCoordinate(index: r) + 1, y: row){
@@ -586,6 +608,7 @@ struct GameView: View {
     }
     
     func checkMoreCols(index1: Int, index2: Int,direction: Bool)->Bool{
+        print("check more cols")
         var u,d:Int
 
         if getYCoordinate(index: index1) > getYCoordinate(index: index2){
@@ -599,22 +622,30 @@ struct GameView: View {
         
         
         for col in getXCoordinate(index: index2)...columns{
-            print(col)
-            if  checkRow(x1: getXCoordinate(index: index1), x2:col + ((getXCoordinate(index: index2) - getXCoordinate(index: index1) == 1) ? 1 : 0), y: getYCoordinate(index: index1)) &&
-                    (col == columns ? true : ((col == getXCoordinate(index: index2) && getXCoordinate(index: index1) != getXCoordinate(index: index2)) ? true : checkCol(y1: getYCoordinate(index: u)-1, y2: getYCoordinate(index: d)+1, x: col))) &&
-                    (col == getXCoordinate(index: index2) ? true : checkRow(x1: getXCoordinate(index: index2), x2: col, y: getYCoordinate(index: index2))){
-                return true
+
+            if  checkRow(x1: getXCoordinate(index: index1), x2:col + 1 , y: getYCoordinate(index: index1)){
+                
+                if ((getYCoordinate(index: d) - getYCoordinate(index: u) == 1) ? true : checkCol(y1: getYCoordinate(index: u), y2: getYCoordinate(index: d), x: col)){
+                    if ((col == getXCoordinate(index: index2)) ? true : checkRow(x1: getXCoordinate(index: index2), x2: col + 1, y: getYCoordinate(index: index2))) {
+                        return true
+                    }
+                }
+                   
+                
+            }else{
+                break
             }
         }
         
         for col in -1...getXCoordinate(index: index1){
-            print(col)
-            if  (col == getXCoordinate(index: index1) ? true : checkRow(x1: col, x2:getXCoordinate(index: index1) , y: getYCoordinate(index: index1))) &&
-                    (col == -1 ? true : checkCol(y1: getYCoordinate(index: u)-1, y2: getYCoordinate(index: d)+1, x: col)) &&
-                    checkRow(x1: col + ((getXCoordinate(index: index2) - getXCoordinate(index: index1) == 1) ? 0 : 1), x2: getXCoordinate(index: index2), y: getYCoordinate(index: index2)){
-                return true
+            if checkRow(x1: col-1, x2: getXCoordinate(index: index2), y: getYCoordinate(index: index2)){
+                if ((getYCoordinate(index: d) - getYCoordinate(index: u) == 1) ? true : checkCol(y1: getYCoordinate(index: u), y2: getYCoordinate(index: d), x: col)){
+                    if((col == getXCoordinate(index: index1)) ? true : checkRow(x1: getXCoordinate(index: col-1), x2: getXCoordinate(index: index1), y: getYCoordinate(index: index1))){
+                        return true
+                    }
+                }
+                
             }
-
 
         }
         
@@ -624,7 +655,7 @@ struct GameView: View {
     }
     
     func checkMoreRows(index1: Int, index2: Int,direction: Bool)->Bool{
-        
+        print("check more rows")
         var l,r:Int
 
         if getXCoordinate(index: index1) > getXCoordinate(index: index2){
@@ -637,7 +668,7 @@ struct GameView: View {
         }
         
         for row in getYCoordinate(index: index2)...rows{
-            print(row)
+  
             if  checkCol(y1: getYCoordinate(index: index1), y2: row + ((getYCoordinate(index: index2) - getYCoordinate(index: index1) == 1) ? 1 : 0), x: getXCoordinate(index: index1)) &&
                     (row == rows ? true : checkRow(x1: getXCoordinate(index: l)-1, x2: getXCoordinate(index: r) + (((row == getYCoordinate(index: index2) && getYCoordinate(index: index1) != getYCoordinate(index: index2))) ? 1 : 0), y: row)) &&
                     (row == getYCoordinate(index: index2) ? true : checkCol(y1: getYCoordinate(index: index2), y2: row, x: getXCoordinate(index: index2))){
@@ -646,7 +677,7 @@ struct GameView: View {
         }
         
         for row in -1...getYCoordinate(index: index1){
-            print(row)
+   
             if  (row == getYCoordinate(index: index1) ? true : checkCol(y1: row, y2: getYCoordinate(index: index1), x: getXCoordinate(index: index1))) &&
                 (row == -1 ? true : checkRow(x1: getXCoordinate(index: l)-1, x2: getXCoordinate(index: r)+1, y: row)) &&
                 checkCol(y1: row + ((getYCoordinate(index: index2) - getYCoordinate(index: index1) == 1) ? -1 : 0), y2: getYCoordinate(index: index2), x: getXCoordinate(index: index2)){
@@ -693,40 +724,40 @@ struct GameView: View {
         switch check{
             
         case 1:
-            print("check row")
+            
             if checkRow(x1: getXCoordinate(index: l), x2: getXCoordinate(index: r), y: y1) {
                 return true
             }
             
-            print("check more rows")
+            
             if checkMoreRows(index1: u, index2: d, direction: true){
                 return true
             }
             
         case 2:
-            print("check col")
+            
             if checkCol(y1: getYCoordinate(index: u), y2: getYCoordinate(index: d), x: x1) {
                 return true
             }
-            print("check more cols")
+            
             if checkMoreCols(index1: l, index2: r, direction: true){
                 return true
             }
         case 3:
-            print("check Hrec")
+           
             if checkHRectangle(index1: l, index2: r) {
                 
                 return true
             }
-            print("check Vrec")
+            
             if checkVRectangle(index1: u, index2: d) {
                 return true
             }
-            print("check more cols")
+            
             if checkMoreCols(index1: l, index2: r, direction: true) {
                 return true
             }
-            print("check more rows")
+            
             if checkMoreRows(index1: u, index2: d, direction: true){
                 return true
             }

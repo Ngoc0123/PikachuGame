@@ -49,7 +49,6 @@ extension GameView {
         func updateCountDown(){
             guard isActive else {return}
             remainingTime -= 1
-            print("\(remainingTime)")
             diff = (initialTime - remainingTime) / initialTime
             if remainingTime <= 0 {
                 isActive = false
