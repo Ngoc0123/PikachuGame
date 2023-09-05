@@ -19,22 +19,20 @@ struct RowView: View {
            
         List{
             ForEach(results, id: \.self){result in
-                HStack{
+                HStack(spacing: UIScreen.main.bounds.width/4.6){
                     Text("\(results.firstIndex(of: result)! + 1). ")
-                    Spacer()
+                        .frame(width: (UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50))
                     Text(result.name!)
-                        .offset(x: 20)
-                    Spacer()
+                        .frame(width: (UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50))
                     Text("\(result.score)")
-                        .frame(width: 50)
-                        .offset(x: 20)
+                        .frame(width: (UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50))
 
                 }
             }
             .listRowBackground(Color.clear)
             
         }
-        .frame(maxHeight: 200)
+        .frame(maxWidth: UIScreen.main.bounds.width/1.5,maxHeight: UIScreen.main.bounds.height / 1.6)
         .scrollContentBackground(.hidden)
         .background{
             Color(red:156/255,green: 240/255, blue:226/255)
@@ -42,8 +40,6 @@ struct RowView: View {
             
         }
         
-        
-        .frame(width: 600)
     }
     
 
@@ -52,5 +48,10 @@ struct RowView: View {
 struct RowView_Previews: PreviewProvider {
     static var previews: some View {
         RowView()
+            .previewDevice("iPhone 14 Pro")
+            .previewInterfaceOrientation(.landscapeLeft)
+        RowView()
+            .previewDevice("iPad Pro")
+            .previewInterfaceOrientation(.landscapeLeft)
     }
 }

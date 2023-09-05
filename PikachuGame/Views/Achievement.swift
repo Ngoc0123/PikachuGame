@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Achievement: View {
+    let language = UserDefaults.standard.string(forKey: "Language")
     var progress:Int
     var id:Int
     @State var name:String = ""
@@ -36,11 +37,11 @@ struct Achievement: View {
                 
                 switch id {
                 case 1:
-                    Text("Complete stage 1")
+                    Text(language == "english" ? "Complete stage 1" : "Hoàn thành màn 1")
                 case 2:
-                    Text("Complete stage 2")
+                    Text(language == "english" ? "Complete stage 2": "Hoàn thành màn 2")
                 case 3:
-                    Text("Complete stage 3")
+                    Text(language == "english" ? "Complete stage 3": "Hoàn thành màn 3")
                 default:
                     Text("")
                 }

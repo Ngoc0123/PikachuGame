@@ -14,20 +14,22 @@ struct GameView: View {
     
     @State var language = UserDefaults.standard.string(forKey: "Language")
     
-    @State var isHighscore = false
     
+    @State var shuffle = 0
     @State var score = 0
     
     
     var columns:Int
     var rows:Int
 
-    
+    @State var isHighscore = false
     @State var isGaming = true
     @State var isPause = false
     @State var isWinning = 0
-    
+    @State var isAvailable = false
     @State var showAchievement = false
+    @State var isOutOfShuffle = false
+    
     
     @State var pokemonGrid: [Pokemon]
     @State var selectedPokeGridIndex1: Int = 0
@@ -53,21 +55,19 @@ struct GameView: View {
         if isGaming {
             ZStack{
                 Image("Background")
-                    .frame(width: UIScreen.main.bounds.width,height: UIScreen.main.bounds.height+20)
+                    .resizable()
+                    .frame(width: UIScreen.main.bounds.width+10,height: UIScreen.main.bounds.height+30)
                 
-                VStack{
+                VStack(spacing: UIDevice.current.userInterfaceIdiom == .pad ? 120 : 10){
                     HStack{
-
                         TimerBar(diff: tvm.diff)
-                            .padding(.top,20)
-            
 
                     }
-                    .padding(.top,20)
+                    .padding(.top,UIDevice.current.userInterfaceIdiom == .pad ? 90 : 50)
                     
                 
-                    HStack(spacing: 50){
-                        VStack{
+                    HStack(alignment: .center,spacing: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50){
+                        VStack(spacing: UIDevice.current.userInterfaceIdiom == .pad ? 80 : 20){
                             Button {
                                 AudioServicesPlaySystemSound(1104)
                                 timerStop.toggle()
@@ -83,20 +83,31 @@ struct GameView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .foregroundColor(.black)
-                                    .frame(width: 50)
+                                    .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50)
                             }
                             
                             
                             Button {
                                 AudioServicesPlaySystemSound(1104)
-                                self.shuffleRemaining()
+                                
+                                if shuffle > 0 {
+                                    self.shuffleRemaining()
+                                    shuffle -= 1
+                                }else{
+                                    withAnimation {
+                                        isOutOfShuffle = true
+                                    }
+                                }
+                                
+                                
                             } label: {
                                 Image(systemName: "arrow.counterclockwise.circle")
                                     .resizable()
                                     .scaledToFit()
                                     .foregroundColor(.black)
-                                    .frame(width: 50)
+                                    .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50)
                             }
+
                         }
 
 
@@ -107,16 +118,19 @@ struct GameView: View {
                             Text(language == "english" ? "SCORE" : "ĐIỂM SỐ")
                                 .padding(.top,50)
                             Text("\(score)")
-                            Spacer()
                             
                         }
-                        .frame(width: 80)
+                        .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? 120 : 80)
                     
                     }
+                    
+                    Spacer()
 
                 }
                 .edgesIgnoringSafeArea(.all)
                 .onAppear{
+                    audioPlayer?.stop()
+                    playSound(sound: "gamebackground", type: "mp3")
                     remainPokemon = pokemonGrid
                     
                     for index in pokemonGrid.indices {
@@ -130,23 +144,39 @@ struct GameView: View {
                     switch player.gameMode{
                     case 1:
                         tvm.start(minutes: 5)
+                        shuffle = 5
                     case 2:
                         tvm.start(minutes: 4)
+                        shuffle = 3
                     case 3:
                         tvm.start(minutes: 3)
+                        shuffle = 1
                     default:
                         tvm.start(minutes: 5)
+                        shuffle = 5
                     }
                     
                 }
                 .onChange(of: selecting) { newValue in
                     if newValue == 2 {
                         if matchingBlocks(index1: selectedPokeGridIndex1, index2: selectedPokeGridIndex2) {
+                            playSound2(sound: "match", type: "mp3")
                             removePokemonIndex(index: selectedPokeGridIndex1)
                             removePokemonIndex(index: selectedPokeGridIndex2)
                             score += 50
-                            print("\(score)")
-                            checkRemaining()
+
+                            if checkRemaining() {
+                                
+                            }else{
+                                if checkAvailable(){
+                                    shuffleRemaining()
+                                }
+                            }
+                            
+                            
+                            
+                        }else{
+                            playSound2(sound: "error", type: "mp3")
                         }
                         selecting = 0
                         selectedPokeGridIndex1 = -1
@@ -160,7 +190,7 @@ struct GameView: View {
                         withAnimation {
                             isWinning = -1
                         }
-                        
+                        playSound(sound: "gameover", type: "mp3")
                     }
                 }
                 
@@ -304,15 +334,40 @@ struct GameView: View {
                     }
                 }
                 
-
-                
                 if showAchievement{
                     PopupAchievementView(showAchievement: $showAchievement, id: columns/4)
                         
                 }
                     
-                
+                if isAvailable {
+                    AvailableView()
+                        .onAppear(perform: {
+                             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                 withAnimation {
+                                     isAvailable = false
+                                 }
 
+                             }
+                        })
+                }
+                
+                if isOutOfShuffle {
+                    OutOfShuffleView()
+                        .onAppear(perform: {
+                             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                 withAnimation {
+                                     isOutOfShuffle = false
+                                 }
+
+                             }
+                        })
+                        .onTapGesture {
+                            withAnimation {
+                                isOutOfShuffle = false
+                            }
+                        }
+                }
+                
                 
             }
             
@@ -327,9 +382,9 @@ struct GameView: View {
     
     
 
+// MARK: Game Logic
 
-
-    func checkRemaining(){
+    func checkRemaining() -> Bool{
         if remainIndex.count == 0{
             tvm.stopTimer()
             score += Int(tvm.remainingTime/100) * player.gameMode
@@ -352,8 +407,11 @@ struct GameView: View {
             withAnimation {
                 isWinning = 1
             }
+            playSound(sound: "victory", type: "mp3")
+            return true
             
         }
+        return false
     }
     
     func shuffleRemaining(){
@@ -363,6 +421,31 @@ struct GameView: View {
             print("\(index)")
             pokemonGrid[remainIndex[index]] = remainPokemon[index]
         }
+        
+        if checkAvailable() {
+            shuffleRemaining()
+        }
+        return
+    }
+    
+    func checkAvailable() -> Bool{
+        
+        for i in remainPokemon.indices {
+            var j = i+1
+            
+            while (j < remainPokemon.count  && remainPokemon[i].id == remainPokemon[j].id){
+                
+                if matchingBlocks(index1: remainIndex[i], index2: remainIndex[j]) {
+                    return false
+                }
+                j += 1
+            }
+            
+        }
+        withAnimation {
+            isAvailable = true
+        }
+        return true
     }
     
     func removePokemonIndex(index: Int){
@@ -646,8 +729,4 @@ struct GameView: View {
     
 }
 
-//struct GameView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GameView(player: .constant(Player(name: "Ngoc", gameMode: 1)) ,stage: 3)
-//    }
-//}
+

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PopupAchievementView: View {
     @Binding var showAchievement: Bool
+    let language = UserDefaults.standard.string(forKey: "Language")
     let id:Int
     var body : some View {
             ZStack{
@@ -16,7 +17,7 @@ struct PopupAchievementView: View {
                     .opacity(0.7)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                 VStack{
-                    Text("New Achievement")
+                    Text(language == "english" ? "New Achievement" : "Thành tựu mới")
                         .padding(.top, 5)
                         .font(.title)
                         .fontWeight(.bold)
@@ -25,11 +26,11 @@ struct PopupAchievementView: View {
                         
                         switch id {
                         case 1:
-                            Text("Complete stage 1")
+                            Text(language == "english" ? "Complete stage 1" : "Hoàn thành màn 1")
                         case 2:
-                            Text("Complete stage 2")
+                            Text(language == "english" ? "Complete stage 2": "Hoàn thành màn 2")
                         case 3:
-                            Text("Complete stage 3")
+                            Text(language == "english" ? "Complete stage 3": "Hoàn thành màn 3")
                         default:
                             Text("")
                         }
@@ -39,7 +40,7 @@ struct PopupAchievementView: View {
                     
 
             }
-            .offset(y: -100)
+            .offset(y: UIDevice.current.userInterfaceIdiom == .pad ? -300: -100)
             .transition(.asymmetric(insertion: .move(edge: .top), removal: .move(edge: .top)))
             .onAppear(perform: {
                  DispatchQueue.main.asyncAfter(deadline: .now() + 2) {

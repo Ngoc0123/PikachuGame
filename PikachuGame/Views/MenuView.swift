@@ -42,16 +42,22 @@ struct MenuView: View {
                 SettingView(player: $player)
                     
             }
+        case "howtoplay":
+            VStack{
+                HowToPlayView(player: $player)
+                    
+            }
         default:
             ZStack{
                 Image("Background")
-                    .frame(width: UIScreen.main.bounds.width,height: UIScreen.main.bounds.height)
+                    .resizable()
+                    .frame(width: UIScreen.main.bounds.width+10,height: UIScreen.main.bounds.height+30)
                 
                 VStack(spacing: 20){
                     Image("PokemonLogo")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 400)
+                        .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? 600 : 300)
                 
                     
                     HStack(spacing: 50){
@@ -63,7 +69,7 @@ struct MenuView: View {
                             }
                             
                         } label: {
-                            CustomButton(text: "1", width: 50, height: 50)
+                            CustomButton(text: "1", width: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50, height: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50)
                             
                         }
                         
@@ -75,7 +81,7 @@ struct MenuView: View {
                                     view = "game"
                                 }
                             } label: {
-                                CustomButton(text: "2", width: 50, height: 50)
+                                CustomButton(text: "2", width: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50, height: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50)
                             }
                         }else{
                             
@@ -83,7 +89,7 @@ struct MenuView: View {
                                 AudioServicesPlaySystemSound(1104)
                                 errorText = (language == "english" ? "Complete stage 1 to unlock!" : "Hoàn thành màn 1 để mở khoá!")
                             } label: {
-                                CustomButton(text: "", width: 50, height: 50)
+                                CustomButton(text: "", width: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50, height: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50)
                             }
                         }
                         
@@ -95,7 +101,7 @@ struct MenuView: View {
                                     view = "game"
                                 }
                             } label: {
-                                CustomButton(text: "3", width: 50, height: 50)
+                                CustomButton(text: "3", width: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50, height: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50)
                             }
                         }else{
                             Button {
@@ -103,7 +109,7 @@ struct MenuView: View {
                                 errorText = (language == "english" ? "Complete stage 2 to unlock!" : "Hoàn thành màn 2 để mở khoá!")
                                 
                             } label: {
-                                CustomButton(text: "", width: 50, height: 50)
+                                CustomButton(text: "", width: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50, height: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50)
                             }
                         }
                         
@@ -128,12 +134,15 @@ struct MenuView: View {
                                 view = "leaderboard"
                             }
                         } label: {
-                            CustomButton(text: (language == "english" ? "Leaderboard" : "Bảng Xếp Hạng"), width: 150, height: 40)
+                            CustomButton(text: (language == "english" ? "Leaderboard" : "Bảng Xếp Hạng"), width: UIDevice.current.userInterfaceIdiom == .pad ? 250 : 150, height: UIDevice.current.userInterfaceIdiom == .pad ? 60 : 40)
                         }
                         Button {
-                            AudioServicesPlaySystemSound(1001)
+                            AudioServicesPlaySystemSound(1104)
+                            withAnimation {
+                                view = "howtoplay"
+                            }
                         } label: {
-                            CustomButton(text: (language == "english" ? "How to play" : "Hướng dẫn"), width: 150, height: 40)
+                            CustomButton(text: (language == "english" ? "How to play" : "Hướng dẫn"), width: UIDevice.current.userInterfaceIdiom == .pad ? 250 : 150, height: UIDevice.current.userInterfaceIdiom == .pad ? 60 : 40)
                           
                         }
                         Button {
@@ -143,21 +152,25 @@ struct MenuView: View {
                             }
                             
                         } label: {
-                            CustomButton(text: (language == "english" ? "Setting" : "Cài đặt"), width: 150, height: 40)
+                            CustomButton(text: (language == "english" ? "Setting" : "Cài đặt"), width: UIDevice.current.userInterfaceIdiom == .pad ? 250 : 150, height: UIDevice.current.userInterfaceIdiom == .pad ? 60 : 40)
                         }
                     }
                     
                 }
                 .onAppear{
+                    playSound(sound: "background", type: "mp3")
+                    audioPlayer?.volume = 0.5
                     
                     if UserDefaults.standard.integer(forKey: "firstTime") == 1 {
                         player = DataController().searchFor(name: UserDefaults.standard.string(forKey: "currentName")!, context: moc)
+                        player.gameMode = UserDefaults.standard.integer(forKey: "currentMode")
                         language = UserDefaults.standard.string(forKey: "Language")!
                     }else{
+                        player.gameMode = 1
                         language = "english"
                         UserDefaults.standard.set("english", forKey: "Language")
                     }
-                    player.gameMode = UserDefaults.standard.integer(forKey: "currentMode")
+                    
                     
                 }
                 .foregroundColor(.white)
@@ -199,9 +212,11 @@ struct MenuView: View {
                                     isAlert = true
                                 }else{
                                     player = DataController().searchFor(name: inputUsername, context: moc)
+                                    player.gameMode = 1
                                     loggedIn = true
                                     
                                     UserDefaults.standard.set(inputUsername, forKey: "currentName")
+                                    UserDefaults.standard.set(1, forKey: "currentMode")
                                     UserDefaults.standard.set(1, forKey: "firstTime")
                                 }
                                 
@@ -226,8 +241,12 @@ struct MenuView: View {
     }
 }
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MenuView(player: .constant(Player(name: "Ngoc", gameMode: 1, progression: 1, highscore: 12, matches: 9, won: 3)),loggedIn: false).previewInterfaceOrientation(.landscapeLeft)
-//    }
-//}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        MenuView(player: .constant(Player(name: "Ngoc", gameMode: 1, progression: 1, highscore: 12, matches: 9, won: 3)),loggedIn: true).previewInterfaceOrientation(.landscapeLeft)
+        
+        MenuView(player: .constant(Player(name: "Ngoc", gameMode: 1, progression: 1, highscore: 12, matches: 9, won: 3)),loggedIn: true)
+            .previewDevice("iPhone 14 Pro")
+            .previewInterfaceOrientation(.landscapeLeft)
+    }
+}

@@ -23,7 +23,10 @@ struct LeaderBoard: View {
             ZStack{
                 
                 Image("Background")
-                    .frame(width: UIScreen.main.bounds.width,height: UIScreen.main.bounds.height)
+                    .resizable()
+                    .frame(width: UIScreen.main.bounds.width+10,height: UIScreen.main.bounds.height+30)
+                
+                
                 VStack{
                     HStack(alignment: .center){
                         Button {
@@ -36,17 +39,17 @@ struct LeaderBoard: View {
                             Image("BackArrow")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(maxWidth: 50)
+                                .frame(height: UIScreen.main.bounds.height/10)
                         }
                         .padding(.leading, 50)
                         
-                        Spacer()
                         
                         Image(language == "english" ? "Leaderboard" : "BXH")
                             .resizable()
                             .scaledToFit()
-                            .frame(height: 100)
-                       
+                            .frame(height: UIScreen.main.bounds.height/4)
+                            .offset(x: UIScreen.main.bounds.width/(UIDevice.current.userInterfaceIdiom == .pad ? 8 : 5))
+                        
                         Spacer()
                         
                         Button(action: {
@@ -54,21 +57,23 @@ struct LeaderBoard: View {
                             isFiltering = true}
                         ){
                             Image("ProfileButton")
-                                .resizable().scaledToFit().frame(width: 50)
+                                .resizable()
+                                .scaledToFit()
                                 .padding(.trailing,50)
+                                .frame(height: UIScreen.main.bounds.height/10)
                                 
                             
                         }.popover(isPresented: $isFiltering, attachmentAnchor: .point(.bottomLeading),arrowEdge: .top) {
                             ProfileView(player: $player)
                         }
                     }
-                    .padding(.top,20)
+                    .padding(.top,30)
                     
                     ExtendedDivider(width: 3)
-                        .frame(maxWidth: 600)
+                        .frame(maxWidth: UIScreen.main.bounds.width/1.5)
                         .offset(y: -20)
                     
-                    HStack(spacing: 100){
+                    HStack(spacing: UIScreen.main.bounds.width/9){
                         Text(language == "english" ? "Ranking" : "Xếp Hạng")
                         ExtendedDivider(width: 1,direction: .vertical)
                             .frame(height: 20)
@@ -78,18 +83,19 @@ struct LeaderBoard: View {
                         Text(language == "english" ? "Scores" : "Điểm")
                     }
                     
-                    if results.count == 0 {
-                        VStack{
-                            Spacer()
-                        }
-                    }else{
+                    if results.count != 0 {
+                        
                         RowView()
+      
                     }
                     
-                    
+                    Spacer()
  
 
                 }
+            }
+            .onAppear{
+                playSound(sound: "leaderboardbackground", type: "mp3")
             }
             .ignoresSafeArea()
             
@@ -132,6 +138,12 @@ extension View {
 
 struct Test_Previews: PreviewProvider {
     static var previews: some View {
-        LeaderBoard(player: .constant(Player(name: "ngoc", gameMode: 1, progression: 2, highscore: 243, matches: 3, won: 3))).previewInterfaceOrientation(.landscapeLeft)
+        LeaderBoard(player: .constant(Player(name: "ngoc", gameMode: 1, progression: 2, highscore: 243, matches: 3, won: 3)))
+            .previewDevice("iPhone 14 Pro")
+            .previewInterfaceOrientation(.landscapeLeft)
+        
+        LeaderBoard(player: .constant(Player(name: "ngoc", gameMode: 1, progression: 2, highscore: 243, matches: 3, won: 3)))
+            .previewDevice("iPad Pro")
+            .previewInterfaceOrientation(.landscapeLeft)
     }
 }
