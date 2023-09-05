@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "HTP.PNG",
+      "filename" : "HTP.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "HTP@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "HTP@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

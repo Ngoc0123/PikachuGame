@@ -14,8 +14,11 @@ struct SettingView: View {
     @Environment (\.managedObjectContext) var moc
     
     @State var language = UserDefaults.standard.string(forKey: "Language")
+    @State var theme = UserDefaults.standard.string(forKey: "theme")!
+    
     @State var selectedLanguage: String = "English"
     let languageMode = ["English", "Tiếng Việt"]
+    
     
 
     @State var isDisplay = false
@@ -32,7 +35,7 @@ struct SettingView: View {
     var body: some View {
         if isSetting{
             ZStack{
-                Image("Background")
+                Image(theme == "light" ? "Background" : "BackGroundDark")
                     .resizable()
                     .frame(width: UIScreen.main.bounds.width+10,height: UIScreen.main.bounds.height+30)
                 
@@ -66,7 +69,7 @@ struct SettingView: View {
                     .frame(minWidth: 0,maxWidth: .infinity)
                     
                     ZStack{
-                        Image("Box")
+                        Image(theme == "light" ? "Box" : "DarkBox")
                             .resizable()
                 
                             .frame(width: UIScreen.main.bounds.width/1.5,height: UIScreen.main.bounds.height / (UIDevice.current.userInterfaceIdiom == .pad ? 1.5 : 1.4))
@@ -76,7 +79,7 @@ struct SettingView: View {
                                 
                                 HStack(spacing:UIDevice.current.userInterfaceIdiom == .pad ? 100 : 20){
                                     Text(language == "english" ? "Username: " : "Tên người chơi: ")
-                                        .foregroundColor(Color(red: 92/255,green:61/255,blue:4/255))
+                                        .foregroundColor(theme == "light" ? Color(red: 92/255,green:61/255,blue:4/255) : .white)
                                         .fontWeight(.bold)
                                     
                                     
@@ -84,6 +87,7 @@ struct SettingView: View {
                                         TextField(text: $newName) {
                                             Text(player.name)
                                         }
+                                        .foregroundColor(theme == "light" ? .black : .white)
                                         .frame(width: 100)
                                         Button {
                                             AudioServicesPlaySystemSound(1104)
@@ -101,7 +105,7 @@ struct SettingView: View {
                                             Image("tick")
                                                 .resizable()
                                                 .scaledToFit()
-                                                .frame(width: 20)
+                                                .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? 30 : 20)
                                                 .shadow(radius: 10)
                                         }
                                         Button {
@@ -112,11 +116,12 @@ struct SettingView: View {
                                             Image("cross")
                                                 .resizable()
                                                 .scaledToFit()
-                                                .frame(width: 20)
+                                                .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? 30 : 20)
                                                 .shadow(radius: 10)
                                         }
                                     }else{
                                         Text(player.name)
+                                            .foregroundColor(theme == "light" ? .black : .white)
                                             .frame(width: 100)
                                         Button {
                                             AudioServicesPlaySystemSound(1104)
@@ -125,6 +130,7 @@ struct SettingView: View {
                                             Image(systemName: "pencil.line")
                                                 .resizable()
                                                 .scaledToFit()
+                                                .foregroundColor(theme == "light" ? .black : .white)
                                                 .frame(width: (UIDevice.current.userInterfaceIdiom == .pad ? 40 : 20))
                                         }
                                     }
@@ -137,11 +143,12 @@ struct SettingView: View {
                             
                                 HStack(spacing: UIDevice.current.userInterfaceIdiom == .pad ? 130 : 100){
                                     Text(language == "english" ? "Difficulty: " : "Độ khó: ")
-                                        .foregroundColor(Color(red: 92/255,green:61/255,blue:4/255))
+                                        .foregroundColor(theme == "light" ? Color(red: 92/255,green:61/255,blue:4/255) : .white)
                                         .fontWeight(.bold)
                                     Picker("Choose a mode", selection: $selectedMode) {
                                         ForEach(gameMode, id: \.self){
                                             Text($0)
+                                                .foregroundColor(theme == "light" ? .black : .white)
                                         }
                                     }
                                     .onChange(of: selectedMode) { newValue in
@@ -177,7 +184,7 @@ struct SettingView: View {
                                         Image(systemName: "questionmark.circle")
                                             .resizable()
                                             .scaledToFit()
-                                            .foregroundColor(.black)
+                                            .foregroundColor(theme == "light" ? .black : .white)
                                             .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? 40 : 20)
 
                                         
@@ -233,11 +240,12 @@ struct SettingView: View {
                                 
                                 HStack(spacing: 20){
                                     Text(language == "english" ? "Language: " : "Ngôn Ngữ: ")
-                                        .foregroundColor(Color(red: 92/255,green:61/255,blue:4/255))
+                                        .foregroundColor(theme == "light" ? Color(red: 92/255,green:61/255,blue:4/255) : .white)
                                         .fontWeight(.bold)
                                     Picker("Choose a language", selection: $selectedLanguage) {
                                         ForEach(languageMode, id: \.self){
                                             Text($0)
+                                                .foregroundColor(theme == "light" ? .black : .white)
                                         }
                                     }
                                     .onChange(of: selectedLanguage) { newValue in
@@ -254,6 +262,25 @@ struct SettingView: View {
                                         
                                     }
                                     
+                                    Button {
+                                        if theme == "light" {
+                                            withAnimation(.easeIn(duration: 1)) {
+                                                theme = "dark"
+                                            }
+                                            
+                                            UserDefaults.standard.setValue("dark", forKey: "theme")
+                                        }else{
+                                            withAnimation(.easeIn(duration: 1)) {
+                                                theme = "light"
+                                            }
+                                            
+                                            UserDefaults.standard.setValue("light", forKey: "theme")
+                                        }
+                                    } label: {
+                                        Image(systemName: theme == "light" ? "moon.fill" : "sun.max")
+                                            .foregroundColor(theme == "light" ? .black : .white)
+                                    }
+
                                 }
                                 .frame(height: UIScreen.main.bounds.height / (UIDevice.current.userInterfaceIdiom == .pad ? 10 : 10))
                                 

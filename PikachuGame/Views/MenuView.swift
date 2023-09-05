@@ -17,6 +17,7 @@ struct MenuView: View {
     
     @State var stage = 1
     @State var view = "menu"
+    @State var theme = "light"
     
     @State var loggedIn:Bool
     @State var inputUsername = ""
@@ -49,7 +50,7 @@ struct MenuView: View {
             }
         default:
             ZStack{
-                Image("Background")
+                Image(theme == "light" ? "Background" : "BackGroundDark")
                     .resizable()
                     .frame(width: UIScreen.main.bounds.width+10,height: UIScreen.main.bounds.height+30)
                 
@@ -164,10 +165,13 @@ struct MenuView: View {
                     if UserDefaults.standard.integer(forKey: "firstTime") == 1 {
                         player = DataController().searchFor(name: UserDefaults.standard.string(forKey: "currentName")!, context: moc)
                         player.gameMode = UserDefaults.standard.integer(forKey: "currentMode")
+                        
+                        theme = UserDefaults.standard.string(forKey: "theme")!
                         language = UserDefaults.standard.string(forKey: "Language")!
                     }else{
                         player.gameMode = 1
                         language = "english"
+                        theme = "light"
                         UserDefaults.standard.set("english", forKey: "Language")
                     }
                     
@@ -217,6 +221,7 @@ struct MenuView: View {
                                     
                                     UserDefaults.standard.set(inputUsername, forKey: "currentName")
                                     UserDefaults.standard.set(1, forKey: "currentMode")
+                                    UserDefaults.standard.set("light", forKey: "theme")
                                     UserDefaults.standard.set(1, forKey: "firstTime")
                                 }
                                 

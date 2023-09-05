@@ -16,13 +16,14 @@ struct LeaderBoard: View {
     
     @State var isFiltering = false
     @State var isLearderboard = true
-    @State var language = UserDefaults.standard.string(forKey: "Language")
+    let language = UserDefaults.standard.string(forKey: "Language")
+    let theme = UserDefaults.standard.string(forKey: "theme")!
 
     var body: some View {
         if isLearderboard {
             ZStack{
                 
-                Image("Background")
+                Image(theme == "light" ? "Background" : "BackGroundDark")
                     .resizable()
                     .frame(width: UIScreen.main.bounds.width+10,height: UIScreen.main.bounds.height+30)
                 
@@ -69,18 +70,24 @@ struct LeaderBoard: View {
                     }
                     .padding(.top,30)
                     
-                    ExtendedDivider(width: 3)
-                        .frame(maxWidth: UIScreen.main.bounds.width/1.5)
+                    Divider()
+                        .frame(width: UIScreen.main.bounds.width/1.5,height: 3)
+                        .overlay(theme == "light" ? .black : .white)
                         .offset(y: -20)
                     
                     HStack(spacing: UIScreen.main.bounds.width/9){
                         Text(language == "english" ? "Ranking" : "Xếp Hạng")
-                        ExtendedDivider(width: 1,direction: .vertical)
-                            .frame(height: 20)
+                            .foregroundColor(theme == "light" ? .black : .white)
+                        Divider()
+                            .frame(width: 3,height: 20)
+                            .overlay(theme == "light" ? .black : .white)
                         Text(language == "english" ? "Player" : "Người Chơi")
-                        ExtendedDivider(width: 1,direction: .vertical)
-                            .frame(height: 20)
+                            .foregroundColor(theme == "light" ? .black : .white)
+                        Divider()
+                            .frame(width: 3,height: 20)
+                            .overlay(theme == "light" ? .black : .white)
                         Text(language == "english" ? "Scores" : "Điểm")
+                            .foregroundColor(theme == "light" ? .black : .white)
                     }
                     
                     if results.count != 0 {

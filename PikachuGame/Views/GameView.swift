@@ -12,8 +12,8 @@ struct GameView: View {
     @Binding var player:Player
     @Environment (\.managedObjectContext) var moc
     
-    @State var language = UserDefaults.standard.string(forKey: "Language")
-    
+    let language = UserDefaults.standard.string(forKey: "Language")
+    let theme = UserDefaults.standard.string(forKey: "theme")!
     
     @State var shuffle = 0
     @State var score = 0
@@ -54,7 +54,7 @@ struct GameView: View {
     var body: some View {
         if isGaming {
             ZStack{
-                Image("Background")
+                Image(theme == "light" ? "Background" : "BackGroundDark")
                     .resizable()
                     .frame(width: UIScreen.main.bounds.width+10,height: UIScreen.main.bounds.height+30)
                 
@@ -75,14 +75,13 @@ struct GameView: View {
                                 withAnimation {
                                     isPause = true
                                 }
-                                
-                                print("stop")
+
                                 
                             } label: {
                                 Image(systemName: "pause.circle")
                                     .resizable()
                                     .scaledToFit()
-                                    .foregroundColor(.black)
+                                    .foregroundColor(theme == "light" ? .black : .white)
                                     .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50)
                             }
                             
@@ -104,7 +103,7 @@ struct GameView: View {
                                 Image(systemName: "arrow.counterclockwise.circle")
                                     .resizable()
                                     .scaledToFit()
-                                    .foregroundColor(.black)
+                                    .foregroundColor(theme == "light" ? .black : .white)
                                     .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? 100 : 50)
                             }
 
@@ -116,11 +115,15 @@ struct GameView: View {
                 
                         VStack{
                             Text(language == "english" ? "SCORE" : "ĐIỂM SỐ")
+                                .font(.system(size: UIDevice.current.userInterfaceIdiom == .pad ? 40 : 28))
+                                .foregroundColor(theme == "light" ? .black : .white)
                                 .padding(.top,50)
                             Text("\(score)")
+                                .foregroundColor(theme == "light" ? .black : .white)
+                                .font(.system(size: UIDevice.current.userInterfaceIdiom == .pad ? 36 : 24))
                             
                         }
-                        .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? 120 : 80)
+                        .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? 160 : 120)
                     
                     }
                     
@@ -199,11 +202,12 @@ struct GameView: View {
                         Color.black
                             .opacity(0.5)
                         ZStack{
-                            Image("Box")
+                            Image(theme == "light" ? "Box" : "DarkBox")
                                 .resizable()
                                 .frame(width: 600,height: 400)
                             VStack{
                                 Text(language == "english" ? "Pause!!" : "Tạm dừng!!")
+                                    .foregroundColor(theme == "light" ? .black : .white)
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                 Button {
@@ -241,11 +245,12 @@ struct GameView: View {
                         Color.black
                             .opacity(0.5)
                         ZStack{
-                            Image("Box")
+                            Image(theme == "light" ? "Box" : "DarkBox")
                                 .resizable()
                                 .frame(width: 600,height: 400)
                             VStack(spacing: 10){
                                 Text(language == "english" ? "🥳Victory!!!🥳" : "🥳Chiến Thắng!!!🥳")
+                                    .foregroundColor(theme == "light" ? .black : .white)
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                 if isHighscore{
@@ -255,6 +260,7 @@ struct GameView: View {
                                             .scaledToFit()
                                             .frame(width: 80)
                                         Text(language == "english" ? "New Highscore" : "Điểm cao mới")
+                                            .foregroundColor(theme == "light" ? .black : .white)
                                             .font(.largeTitle)
                                         Image("crown")
                                             .resizable()
@@ -265,13 +271,16 @@ struct GameView: View {
                                     .frame(maxHeight: 100)
                                     
                                     Text("\(score)")
+                                        .foregroundColor(theme == "light" ? .black : .white)
                                         .font(.largeTitle)
                                     
                                 }else{
                                     VStack{
                                         Text(language == "english" ? "Score" : "Điểm số")
+                                            .foregroundColor(theme == "light" ? .black : .white)
                                             .font(.largeTitle)
                                         Text("\(score)")
+                                            .foregroundColor(theme == "light" ? .black : .white)
                                             .font(.largeTitle)
                                 }
                                 
@@ -305,16 +314,20 @@ struct GameView: View {
                         Color.black
                             .opacity(0.5)
                         ZStack{
-                            Image("Box")
+                            Image(theme == "light" ? "Box" : "DarkBox")
                                 .resizable()
                                 .frame(width: 600,height: 400)
                             VStack(spacing: 10){
                                 Text(language == "english" ? "😭Game Over😭" : "😭Thất Bại😭")
+                                    .foregroundColor(theme == "light" ? .black : .white)
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                                 HStack{
+                                    
                                     Text(language == "english" ? "Score: " : "Điểm số: ")
+                                        .foregroundColor(theme == "light" ? .black : .white)
                                     Text("\(score)")
+                                        .foregroundColor(theme == "light" ? .black : .white)
                                 }
                                 Button {
                                     AudioServicesPlaySystemSound(1104)

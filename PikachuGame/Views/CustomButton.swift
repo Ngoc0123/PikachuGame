@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CustomButton: View {
+    
+    let theme = UserDefaults.standard.string(forKey: "theme") ?? "light"
     let text:String
     let width:CGFloat
     let height:CGFloat
@@ -16,19 +18,19 @@ struct CustomButton: View {
         ZStack{
             Image(systemName: "rectangle.fill")
                 .resizable()
-                .foregroundColor(Color(red: 92/255,green:61/255,blue:4/255))
+                .foregroundColor(theme == "light" ? Color(red: 92/255,green:61/255,blue:4/255):Color(red: 237/255,green:150/255,blue:57/255))
                 .frame(width: width+10, height: height+10)
                
             Image(systemName: "rectangle.fill")
                 .resizable()
-                .foregroundColor(Color(red: 237/255,green:150/255,blue:57/255))
+                .foregroundColor(theme == "light" ? Color(red: 237/255,green:150/255,blue:57/255):Color(red: 92/255,green:61/255,blue:4/255))
                 .frame(width: width, height: height)
            
             
             if text != "" {
                 Text(text)
                     .fontWeight(.bold)
-                    .foregroundColor(.black)
+                    .foregroundColor(theme == "light" ? .black : .white)
             }else{
                 ZStack{
                     Color.black

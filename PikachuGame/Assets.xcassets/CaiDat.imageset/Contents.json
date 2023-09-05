@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "CaiDat.PNG",
+      "filename" : "CaiDat.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "CaiDat@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "CaiDat@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -9,13 +9,14 @@ import SwiftUI
 
 struct HowToPlayView: View {
     @Binding var player: Player
-    var language = UserDefaults.standard.string(forKey: "Language")
+    let language = UserDefaults.standard.string(forKey: "Language")
+    let theme = UserDefaults.standard.string(forKey: "theme")!
     
     @State var isHTP = true
     var body: some View {
         if isHTP {
             ZStack{
-                Image("Background")
+                Image(theme == "light" ? "Background" : "BackGroundDark")
                     .resizable()
                     .frame(width: UIScreen.main.bounds.width+10,height: UIScreen.main.bounds.height+30)
                 VStack{
@@ -115,6 +116,7 @@ struct HowToPlayView: View {
                         
                         
                     }
+                    
                     .background{
                         Color(red:255/255,green: 255/255, blue:221/255)
                             .opacity(0.6)
