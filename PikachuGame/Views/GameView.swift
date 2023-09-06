@@ -624,7 +624,6 @@ struct GameView: View {
         for col in getXCoordinate(index: index2)...columns{
 
             if  checkRow(x1: getXCoordinate(index: index1), x2:col + 1 , y: getYCoordinate(index: index1)){
-                
                 if ((getYCoordinate(index: d) - getYCoordinate(index: u) == 1) ? true : checkCol(y1: getYCoordinate(index: u), y2: getYCoordinate(index: d), x: col)){
                     if ((col == getXCoordinate(index: index2)) ? true : checkRow(x1: getXCoordinate(index: index2), x2: col + 1, y: getYCoordinate(index: index2))) {
                         return true
@@ -669,23 +668,27 @@ struct GameView: View {
         
         for row in getYCoordinate(index: index2)...rows{
   
-            if  checkCol(y1: getYCoordinate(index: index1), y2: row + ((getYCoordinate(index: index2) - getYCoordinate(index: index1) == 1) ? 1 : 0), x: getXCoordinate(index: index1)) &&
-                    (row == rows ? true : checkRow(x1: getXCoordinate(index: l)-1, x2: getXCoordinate(index: r) + (((row == getYCoordinate(index: index2) && getYCoordinate(index: index1) != getYCoordinate(index: index2))) ? 1 : 0), y: row)) &&
-                    (row == getYCoordinate(index: index2) ? true : checkCol(y1: getYCoordinate(index: index2), y2: row, x: getXCoordinate(index: index2))){
-                return true
+            if checkCol(y1: getYCoordinate(index: index1), y2: row+1, x: getXCoordinate(index: index1)){
+                if((getXCoordinate(index: r) - getXCoordinate(index: l) == 1) ? true : checkRow(x1: getXCoordinate(index: l), x2: getXCoordinate(index: r), y: row)){
+                    if((row == getYCoordinate(index: index2) ? true : checkCol(y1: getYCoordinate(index: index2), y2: row+1, x: getXCoordinate(index: index2)))){
+                        return true
+                    }
+                }
+            }else{
+                break
             }
         }
         
         for row in -1...getYCoordinate(index: index1){
-   
-            if  (row == getYCoordinate(index: index1) ? true : checkCol(y1: row, y2: getYCoordinate(index: index1), x: getXCoordinate(index: index1))) &&
-                (row == -1 ? true : checkRow(x1: getXCoordinate(index: l)-1, x2: getXCoordinate(index: r)+1, y: row)) &&
-                checkCol(y1: row + ((getYCoordinate(index: index2) - getYCoordinate(index: index1) == 1) ? -1 : 0), y2: getYCoordinate(index: index2), x: getXCoordinate(index: index2)){
-                return true
+            if checkCol(y1: row-1, y2: getYCoordinate(index: index2), x: getXCoordinate(index: index2)){
+                if((getXCoordinate(index: r) - getXCoordinate(index: l) == 1) ? true : checkRow(x1: getXCoordinate(index: l), x2: getXCoordinate(index: r), y: row)){
+                    if ((row == getYCoordinate(index: index1)) ? true : checkCol(y1: row-1, y2: getYCoordinate(index: index1), x: getXCoordinate(index: index1))){
+                        return true
+                    }
+                }
             }
         }
         
-  
         return false
     }
     
