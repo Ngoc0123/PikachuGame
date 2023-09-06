@@ -27,6 +27,7 @@
 		2F6DF48A2AA50969005C75C7 /* Result+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6DF4882AA50969005C75C7 /* Result+CoreDataClass.swift */; };
 		2F6DF48B2AA50969005C75C7 /* Result+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6DF4892AA50969005C75C7 /* Result+CoreDataProperties.swift */; };
 		2FA015F22AA771D700C9AD21 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA015F12AA771D700C9AD21 /* SplashScreenView.swift */; };
+		2FA015F62AA846E300C9AD21 /* Document.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2FA015F52AA846E300C9AD21 /* Document.pdf */; };
 		2FBCAAE02AA520B40060CFAD /* PlayerData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBCAADE2AA520B40060CFAD /* PlayerData+CoreDataClass.swift */; };
 		2FBCAAE12AA520B40060CFAD /* PlayerData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBCAADF2AA520B40060CFAD /* PlayerData+CoreDataProperties.swift */; };
 		2FBCAAE32AA5D1D30060CFAD /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBCAAE22AA5D1D30060CFAD /* ProfileView.swift */; };
@@ -70,6 +71,7 @@
 		2F6DF4882AA50969005C75C7 /* Result+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2F6DF4892AA50969005C75C7 /* Result+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2FA015F12AA771D700C9AD21 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		2FA015F52AA846E300C9AD21 /* Document.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Document.pdf; sourceTree = "<group>"; };
 		2FBCAADE2AA520B40060CFAD /* PlayerData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2FBCAADF2AA520B40060CFAD /* PlayerData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2FBCAAE22AA5D1D30060CFAD /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -113,10 +115,6 @@
 		2F5B84FA2A860B0D00D5BB39 = {
 			isa = PBXGroup;
 			children = (
-				2FBCAADE2AA520B40060CFAD /* PlayerData+CoreDataClass.swift */,
-				2FBCAADF2AA520B40060CFAD /* PlayerData+CoreDataProperties.swift */,
-				2F6DF4882AA50969005C75C7 /* Result+CoreDataClass.swift */,
-				2F6DF4892AA50969005C75C7 /* Result+CoreDataProperties.swift */,
 				2F5B85052A860B0D00D5BB39 /* PikachuGame */,
 				2F5B85042A860B0D00D5BB39 /* Products */,
 			);
@@ -133,6 +131,8 @@
 		2F5B85052A860B0D00D5BB39 /* PikachuGame */ = {
 			isa = PBXGroup;
 			children = (
+				2FA015F32AA841FF00C9AD21 /* Document */,
+				2FA015F42AA8420700C9AD21 /* CoreData */,
 				2FBCAAEA2AA661B40060CFAD /* Sounds */,
 				2FB305D82AA4E0BD00DE913A /* ViewModels */,
 				2FB305D72AA4E07E00DE913A /* Model */,
@@ -153,6 +153,25 @@
 				2F5B850E2A860B0E00D5BB39 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2FA015F32AA841FF00C9AD21 /* Document */ = {
+			isa = PBXGroup;
+			children = (
+				2FA015F52AA846E300C9AD21 /* Document.pdf */,
+			);
+			path = Document;
+			sourceTree = "<group>";
+		};
+		2FA015F42AA8420700C9AD21 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				2FBCAADE2AA520B40060CFAD /* PlayerData+CoreDataClass.swift */,
+				2FBCAADF2AA520B40060CFAD /* PlayerData+CoreDataProperties.swift */,
+				2F6DF4882AA50969005C75C7 /* Result+CoreDataClass.swift */,
+				2F6DF4892AA50969005C75C7 /* Result+CoreDataProperties.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		2FB305D62AA4E07700DE913A /* Views */ = {
@@ -280,6 +299,7 @@
 				2FBCAB002AA6E44A0060CFAD /* gamebackground.mp3 in Resources */,
 				2FBCAAFE2AA6E2B40060CFAD /* leaderboardbackground.mp3 in Resources */,
 				2FBCAAF02AA663C00060CFAD /* error.mp3 in Resources */,
+				2FA015F62AA846E300C9AD21 /* Document.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
