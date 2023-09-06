@@ -251,9 +251,13 @@ struct SettingView: View {
                                     .onChange(of: selectedLanguage) { newValue in
                                         switch newValue{
                                         case "English":
+                                            gameMode = ["Easy","Normal","Hard"]
+                                            selectedMode = gameMode[player.gameMode-1]
                                             language = "english"
                                             UserDefaults.standard.setValue("english", forKey: "Language")
                                         case "Tiếng Việt":
+                                            gameMode = ["Dễ","Thường","Khó"]
+                                            selectedMode = gameMode[player.gameMode-1]
                                             language = "vietnammese"
                                             UserDefaults.standard.setValue("vietnammese", forKey: "Language")
                                         default:

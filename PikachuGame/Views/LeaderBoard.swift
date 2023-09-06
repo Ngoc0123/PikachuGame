@@ -103,6 +103,7 @@ struct LeaderBoard: View {
             }
             .onAppear{
                 playSound(sound: "leaderboardbackground", type: "mp3")
+                audioPlayer?.volume = 0.1
             }
             .ignoresSafeArea()
             

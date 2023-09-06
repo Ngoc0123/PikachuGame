@@ -9,8 +9,8 @@ import SwiftUI
 
 struct HowToPlayView: View {
     @Binding var player: Player
-    let language = UserDefaults.standard.string(forKey: "Language")
-    let theme = UserDefaults.standard.string(forKey: "theme")!
+    let language = UserDefaults.standard.string(forKey: "Language") ?? "english"
+    let theme = UserDefaults.standard.string(forKey: "theme") ?? "light"
     
     @State var isHTP = true
     var body: some View {
@@ -110,7 +110,7 @@ struct HowToPlayView: View {
                         VStack(alignment: .leading){
                             Text(language == "english" ? "Difficulties:" : "Độ khó:")
                                 .font(.headline)
-                            Text(language == "english" ? "There are 3 difficulties: easy, normal and hard. The bonus multiplier will increase base on difficulty." : "Có 3 độ khó: dễ, thường và khó. Bội số của điểm bonus sẽ đc tăng lên theo độ khó.")
+                            Text(language == "english" ? "There are 3 difficulties: easy, normal and hard. The difficulty will adjust the timer and the number of shuffle you get. The bonus multiplier will increase base on difficulty." : "Có 3 độ khó: dễ, thường và khó. Độ khó của trò chơi sẽ làm thay đổi thời gian của màn chơi và số lượt đảo của bạn. Bội số của điểm bonus sẽ đc tăng lên theo độ khó.")
                                 .frame(minWidth: 0,maxWidth: .infinity)
                         }
                         
@@ -131,6 +131,7 @@ struct HowToPlayView: View {
             }
             .onAppear{
                 playSound(sound: "htpbackground", type: "mp3")
+                audioPlayer?.volume = 0.1
             }
             .ignoresSafeArea()
         }else{

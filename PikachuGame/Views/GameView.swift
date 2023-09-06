@@ -132,8 +132,8 @@ struct GameView: View {
                 }
                 .edgesIgnoringSafeArea(.all)
                 .onAppear{
-                    audioPlayer?.stop()
                     playSound(sound: "gamebackground", type: "mp3")
+                    audioPlayer?.volume = 0.1
                     remainPokemon = pokemonGrid
                     
                     for index in pokemonGrid.indices {
@@ -193,7 +193,6 @@ struct GameView: View {
                         withAnimation {
                             isWinning = -1
                         }
-                        playSound(sound: "gameover", type: "mp3")
                     }
                 }
                 
@@ -289,16 +288,11 @@ struct GameView: View {
                                 }
                                 Button {
                                     AudioServicesPlaySystemSound(1104)
-                                    if player.progression < columns/4 {
-                                        player.progression = columns/4
-                                    }
                                     
-                                    player.won += 1
-                                    player.matches += 1
                                     withAnimation {
                                         isGaming = false
                                     }
-                                    DataController().savePlayer(player: player, context: moc)
+                                    
                                 } label: {
                                     CustomButton(text: "Back to Meunu", width: 200, height: 30)
                                 }
@@ -307,6 +301,27 @@ struct GameView: View {
                         }
                         
                         
+                    }
+                    .onAppear{
+                        playSound(sound: "victory", type: "mp3")
+                        if score > player.highscore {
+                            player.highscore = score
+                            isHighscore = true
+                        }
+                        
+                    
+                        DataController().addResult(name: player.name, score: Int64(score), context: moc)
+                        
+                        if player.progression < columns/4 {
+                            player.progression = columns/4
+                            withAnimation {
+                                showAchievement = true
+                            }
+                        }
+                        
+                        player.won += 1
+                        player.matches += 1
+                        DataController().savePlayer(player: player, context: moc)
                     }
                     .transition(.opacity)
                 }else if isWinning == -1{
@@ -344,6 +359,10 @@ struct GameView: View {
                         }
                         
                         
+                    }
+                    .onAppear{
+                        DataController().addResult(name: player.name, score: Int64(score), context: moc)
+                        playSound(sound: "gameover", type: "mp3")
                     }
                 }
                 
@@ -401,26 +420,11 @@ struct GameView: View {
         if remainIndex.count == 0{
             tvm.stopTimer()
             score += Int(tvm.remainingTime/100) * player.gameMode
-            print("\(tvm.remainingTime/100)")
-            print("\(player.gameMode)")
             
-            if score > player.highscore {
-                player.highscore = score
-                print("new highscore")
-                isHighscore = true
-            }
             
-            if player.progression < columns/4 {
-                withAnimation {
-                    showAchievement = true
-                }
-                
-            }
-            DataController().addResult(name: player.name, score: Int64(score), context: moc)
             withAnimation {
                 isWinning = 1
             }
-            playSound(sound: "victory", type: "mp3")
             return true
             
         }
@@ -547,7 +551,6 @@ struct GameView: View {
     }
     
     func checkHRectangle(index1: Int, index2: Int) -> Bool{
-        print("check Hrec")
 
         var u,d:Int
 
@@ -607,8 +610,8 @@ struct GameView: View {
         return false
     }
     
-    func checkMoreCols(index1: Int, index2: Int,direction: Bool)->Bool{
-        print("check more cols")
+    func checkMoreCols(index1: Int, index2: Int)->Bool{
+
         var u,d:Int
 
         if getYCoordinate(index: index1) > getYCoordinate(index: index2){
@@ -653,8 +656,7 @@ struct GameView: View {
         return false
     }
     
-    func checkMoreRows(index1: Int, index2: Int,direction: Bool)->Bool{
-        print("check more rows")
+    func checkMoreRows(index1: Int, index2: Int)->Bool{
         var l,r:Int
 
         if getXCoordinate(index: index1) > getXCoordinate(index: index2){
@@ -691,7 +693,6 @@ struct GameView: View {
         
         return false
     }
-    
     
     
     func matchingBlocks(index1: Int, index2: Int) -> Bool{
@@ -733,7 +734,7 @@ struct GameView: View {
             }
             
             
-            if checkMoreRows(index1: u, index2: d, direction: true){
+            if checkMoreRows(index1: u, index2: d){
                 return true
             }
             
@@ -743,7 +744,7 @@ struct GameView: View {
                 return true
             }
             
-            if checkMoreCols(index1: l, index2: r, direction: true){
+            if checkMoreCols(index1: l, index2: r){
                 return true
             }
         case 3:
@@ -757,11 +758,11 @@ struct GameView: View {
                 return true
             }
             
-            if checkMoreCols(index1: l, index2: r, direction: true) {
+            if checkMoreCols(index1: l, index2: r) {
                 return true
             }
             
-            if checkMoreRows(index1: u, index2: d, direction: true){
+            if checkMoreRows(index1: u, index2: d){
                 return true
             }
             

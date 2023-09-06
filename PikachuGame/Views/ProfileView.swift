@@ -33,7 +33,7 @@ struct ProfileView: View {
                     VStack(alignment: .trailing){
                         Text(player.name)
                         Text("\(player.matches)")
-                        Text("\((player.won / (player.matches == 0 ? 1 : player.matches)) * 100) %")
+                        Text("\(Int((Float(player.won) / Float(player.matches == 0 ? 1 : player.matches)) * 100)) %")
                         Text("\(player.highscore)")
                     }
 

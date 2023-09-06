@@ -160,7 +160,7 @@ struct MenuView: View {
                 }
                 .onAppear{
                     playSound(sound: "background", type: "mp3")
-                    audioPlayer?.volume = 0.5
+                    audioPlayer?.volume = 0.1
                     
                     if UserDefaults.standard.integer(forKey: "firstTime") == 1 {
                         player = DataController().searchFor(name: UserDefaults.standard.string(forKey: "currentName")!, context: moc)
