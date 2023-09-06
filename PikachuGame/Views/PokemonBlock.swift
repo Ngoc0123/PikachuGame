@@ -5,6 +5,17 @@
 //  Created by Nguyen The Bao Ngoc on 11/08/2023.
 //
 
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Nguyen The Bao Ngoc
+  ID: s3924436
+  Created  date: 11/08/2023.
+  Last modified: 06/09/2023
+  Acknowledgement: lecture slide
+*/
 import SwiftUI
 import AVFoundation
 
@@ -22,6 +33,7 @@ struct PokemonBlock: View {
     
     @State var tapped: Bool = false
     var body: some View {
+        //invisible block
         if pokemon.id == -1 {
             ZStack{
                 Color.clear
@@ -29,6 +41,7 @@ struct PokemonBlock: View {
             }
         }
         else{
+            //pokemon block
             ZStack{
                 MyIcon()
                     .foregroundColor(Color("blockShadow"))
@@ -47,13 +60,17 @@ struct PokemonBlock: View {
 
                 
             }
+            //if 0 block is being selected
             .onChange(of: selecting, perform: { newValue in
                 if newValue == 0{
                     tapped = false
                 }
             })
+            //tap on 1 block
             .onTapGesture {
                 AudioServicesPlaySystemSound(1105)
+                
+                //untap that block
                 if tapped {
                     tapped = false
                     selecting -= 1
@@ -61,6 +78,7 @@ struct PokemonBlock: View {
                     return
                 }
                 
+                //record to selecting
                 switch selecting{
                 case 0:
                     tapped = true
@@ -74,12 +92,10 @@ struct PokemonBlock: View {
                     return
                 }
                 
-                print("selected1: \(selectedPokeGridIndex1)")
-                print("selected2: \(selectedPokeGridIndex2)")
-                
             }
             .border((tapped && selecting != 0) ? .red : Color("blockFront"),width: 2)
             .onAppear{
+                //setting for different devices
                 switch UIDevice.current.userInterfaceIdiom {
                 case .phone:
                     blockWidth = 21

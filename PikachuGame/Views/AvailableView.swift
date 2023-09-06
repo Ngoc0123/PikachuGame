@@ -5,8 +5,20 @@
 //  Created by Nguyen The Bao Ngoc on 05/09/2023.
 //
 
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Nguyen The Bao Ngoc
+  ID: s3924436
+  Created  date: 05/09/2023.
+  Last modified: 06/09/2023
+  Acknowledgement: lecture slide
+*/
 import SwiftUI
 
+//out of available move popup alert
 struct AvailableView: View {
     let language = UserDefaults.standard.string(forKey: "Language")
     var body: some View {

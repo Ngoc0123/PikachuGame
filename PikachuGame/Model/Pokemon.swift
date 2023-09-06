@@ -5,6 +5,17 @@
 //  Created by Nguyen The Bao Ngoc on 11/08/2023.
 //
 
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Nguyen The Bao Ngoc
+  ID: s3924436
+  Created  date: 11/08/2023.
+  Last modified: 06/09/2023
+  Acknowledgement: lecture slide
+*/
 import Foundation
 
 struct Pokemon: Codable, Identifiable{
@@ -21,19 +32,16 @@ struct Pokemon: Codable, Identifiable{
 class PokemonModel{
     var pokemonArray = decodeJsonFromJsonFile(jsonFileName: "pokemon.json")
     
+    //generate a new pokemon array base on give stage
     func generatePokemonArray(mode: Int) -> [Pokemon]{
         
         let columns = 4*mode
         let rows = 3*mode
-        
-        //var pokemons_var = 3*mode
-        var pairs = 2*mode
-        
+    
+        let pairs = 2*mode
         var pokemons: [Pokemon] = Array(repeating: PokemonModel().pokemonArray[0], count: columns*rows)
-        
         var poke_index = 1
         var cnt = 0
-        
         for index in stride(from: 0, to: columns*rows, by: 2) {
             if cnt == pairs{
                 cnt = 0

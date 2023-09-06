@@ -5,48 +5,71 @@
 //  Created by Nguyen The Bao Ngoc on 02/09/2023.
 //
 
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Nguyen The Bao Ngoc
+  ID: s3924436
+  Created  date: 02/09/2023.
+  Last modified: 06/09/2023
+  Acknowledgement: lecture slide
+*/
+
 import SwiftUI
 import AVFoundation
 
 struct SettingView: View {
+    
+    //current player
+    @Binding var player: Player
+    
+    //playerData from CoreData to switch player
     @FetchRequest(sortDescriptors: []) var players: FetchedResults<PlayerData>
+    //index of the matched player
     @State var playerIndex = -1
     @Environment (\.managedObjectContext) var moc
     
+    //@State because in the view will rerender internally
     @State var language = UserDefaults.standard.string(forKey: "Language") ?? "english"
     @State var theme = UserDefaults.standard.string(forKey: "theme") ?? "light"
     
+    //language picker
     @State var selectedLanguage: String = "English"
     let languageMode = ["English", "Tiếng Việt"]
     
-    
-
-    @State var isDisplay = false
-    @Binding var player: Player
-    
-    @State var isAlert = false
-    @State var isSetting = true
-    @State var selectedMode = "Easy"
-    
+    //Changing name text field
     @State var isChanging = false
     @State var newName = ""
+    
+    //difficulty picker
     @State var gameMode : [String] = []
+    @State var selectedMode = "Easy"
+    
+    //@state to rerender view or switch back to menu
+    @State var isDisplay = false
+    @State var isAlert = false
+    @State var isSetting = true
     
     var body: some View {
         if isSetting{
             ZStack{
+                //background
                 Image(theme == "light" ? "Background" : "BackGroundDark")
                     .resizable()
                     .frame(width: UIScreen.main.bounds.width+10,height: UIScreen.main.bounds.height+30)
                 
+                //contents
                 VStack{
                     HStack(alignment: .center){
+                        
+                        //back button
                         Button {
                             AudioServicesPlaySystemSound(1104)
                             withAnimation {
                                 isSetting = false
                             }
-                            
                             DataController().savePlayer(player: player, context: moc)
                         } label: {
                             Image("BackArrow")
@@ -57,6 +80,7 @@ struct SettingView: View {
                         .padding(.leading,50)
                         
                         
+                        //title
                         Image(language == "english" ? "Setting" : "CaiDat")
                             .resizable()
                             .scaledToFit()
@@ -68,15 +92,20 @@ struct SettingView: View {
                     .padding(.top, 30)
                     .frame(minWidth: 0,maxWidth: .infinity)
                     
+                    
                     ZStack{
+                        //setting background
                         Image(theme == "light" ? "Box" : "DarkBox")
                             .resizable()
                 
                             .frame(width: UIScreen.main.bounds.width/1.5,height: UIScreen.main.bounds.height / (UIDevice.current.userInterfaceIdiom == .pad ? 1.5 : 1.4))
+                        
+                        //content
                         VStack(spacing: 5){
                             
                             VStack(alignment: .leading){
                                 
+                                //name changing
                                 HStack(spacing:UIDevice.current.userInterfaceIdiom == .pad ? 100 : 20){
                                     Text(language == "english" ? "Username: " : "Tên người chơi: ")
                                         .foregroundColor(theme == "light" ? Color(red: 92/255,green:61/255,blue:4/255) : .white)
@@ -91,14 +120,18 @@ struct SettingView: View {
                                         .frame(width: 100)
                                         Button {
                                             AudioServicesPlaySystemSound(1104)
+                                            
+                                            //if the field left empty, alert
                                             if newName == "" {
                                                 isAlert = true
                                                 isChanging = false
                                                 return
                                             }
-                                            player = DataController().searchFor(name: newName, context: moc)
-                                            print("\(player.gameMode)")
                                             
+                                            //search for input username
+                                            player = DataController().searchFor(name: newName, context: moc)
+                                            
+                                    
                                             UserDefaults.standard.set(newName, forKey: "currentName")
                                             isChanging = false
                                         } label: {
@@ -141,6 +174,7 @@ struct SettingView: View {
                                 }
                                 .frame(height: UIScreen.main.bounds.height / (UIDevice.current.userInterfaceIdiom == .pad ? 10 : 10))
                             
+                                //difficulty picker and help button
                                 HStack(spacing: UIDevice.current.userInterfaceIdiom == .pad ? 130 : 100){
                                     Text(language == "english" ? "Difficulty: " : "Độ khó: ")
                                         .foregroundColor(theme == "light" ? Color(red: 92/255,green:61/255,blue:4/255) : .white)
@@ -152,6 +186,7 @@ struct SettingView: View {
                                         }
                                     }
                                     .onChange(of: selectedMode) { newValue in
+                                        //change difficulty to the selected mode and save to UserDefault
                                         switch newValue{
                                         case "Easy" :
                                             player.gameMode = 1
@@ -187,7 +222,7 @@ struct SettingView: View {
                                             .foregroundColor(theme == "light" ? .black : .white)
                                             .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? 40 : 20)
 
-                                        
+                                        //popover information sheet
                                     }.popover(isPresented: $isDisplay, attachmentAnchor: .point(.center),arrowEdge: .leading) {
                                         VStack{
                                             Text(language == "english" ? "The harder it get, The higher score you get" : "Độ khó càng lớn, điểm thưởng càng cao")   
@@ -238,6 +273,7 @@ struct SettingView: View {
                                 }
                                 .frame(height: UIScreen.main.bounds.height / (UIDevice.current.userInterfaceIdiom == .pad ? 10 : 10))
                                 
+                                //language and theme
                                 HStack(spacing: 20){
                                     Text(language == "english" ? "Language: " : "Ngôn Ngữ: ")
                                         .foregroundColor(theme == "light" ? Color(red: 92/255,green:61/255,blue:4/255) : .white)
@@ -249,6 +285,7 @@ struct SettingView: View {
                                         }
                                     }
                                     .onChange(of: selectedLanguage) { newValue in
+                                        //set language and UserDefault base on chosen option
                                         switch newValue{
                                         case "English":
                                             gameMode = ["Easy","Normal","Hard"]
@@ -266,6 +303,7 @@ struct SettingView: View {
                                         
                                     }
                                     
+                                    //toggle theme
                                     Button {
                                         if theme == "light" {
                                             withAnimation(.easeIn(duration: 1)) {
@@ -300,6 +338,7 @@ struct SettingView: View {
                         .frame(width: UIScreen.main.bounds.width/1.7,height: UIScreen.main.bounds.height / (UIDevice.current.userInterfaceIdiom == .pad ? 1.8 : 1.6))
                         
                     }
+                    //alert message
                     .alert(Text("Error! Please do not leave username empty"), isPresented: $isAlert, actions: {
                         Text("Error")
                         Button {
@@ -317,8 +356,10 @@ struct SettingView: View {
                 
             }
             .onAppear{
+                //play audio
                 audioPlayer?.stop()
                 
+                //initialized current value
                 gameMode = (language == "english" ? ["Easy","Normal","Hard"] : ["Dễ" , "Thường" , "Khó"])
                 
                 switch language {

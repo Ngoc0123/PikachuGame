@@ -5,31 +5,51 @@
 //  Created by Nguyen The Bao Ngoc on 03/09/2023.
 //
 
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Nguyen The Bao Ngoc
+  ID: s3924436
+  Created  date: 03/09/2023.
+  Last modified: 06/09/2023
+  Acknowledgement: lecture slide, youtube
+*/
+
 import SwiftUI
 import CoreData
 import AVFoundation
 
 struct LeaderBoard: View {
-    @Binding var player: Player
+    @Binding var player: Player //current player
     @Environment (\.managedObjectContext) var moc
+    
+    //get result from CoreData
     @FetchRequest(sortDescriptors: []) var results: FetchedResults<Result>
     
-    @State var isFiltering = false
+    //@State to rerender views : Profile and switch back to menu
+    @State var isProfile = false
     @State var isLearderboard = true
+    
+    //UserDefault variable to modify language and theme
     let language = UserDefaults.standard.string(forKey: "Language") ?? "english"
     let theme = UserDefaults.standard.string(forKey: "theme") ?? "light"
 
     var body: some View {
         if isLearderboard {
             ZStack{
-                
+                //background
                 Image(theme == "light" ? "Background" : "BackGroundDark")
                     .resizable()
                     .frame(width: UIScreen.main.bounds.width+10,height: UIScreen.main.bounds.height+30)
                 
                 
                 VStack{
+                    //top bar
                     HStack(alignment: .center){
+                        
+                        //back button
                         Button {
                             AudioServicesPlaySystemSound(1104)
                             withAnimation {
@@ -44,7 +64,7 @@ struct LeaderBoard: View {
                         }
                         .padding(.leading, 50)
                         
-                        
+                        //title
                         Image(language == "english" ? "Leaderboard" : "BXH")
                             .resizable()
                             .scaledToFit()
@@ -53,9 +73,10 @@ struct LeaderBoard: View {
                         
                         Spacer()
                         
+                        //profile button
                         Button(action: {
                             AudioServicesPlaySystemSound(1104)
-                            isFiltering = true}
+                            isProfile = true}
                         ){
                             Image("ProfileButton")
                                 .resizable()
@@ -64,12 +85,13 @@ struct LeaderBoard: View {
                                 .frame(height: UIScreen.main.bounds.height/10)
                                 
                             
-                        }.popover(isPresented: $isFiltering, attachmentAnchor: .point(.bottomLeading),arrowEdge: .top) {
+                        }.popover(isPresented: $isProfile, attachmentAnchor: .point(.bottomLeading),arrowEdge: .top) {
                             ProfileView(player: $player)
                         }
                     }
                     .padding(.top,30)
                     
+                    //grid of the leaderboard
                     Divider()
                         .frame(width: UIScreen.main.bounds.width/1.5,height: 3)
                         .overlay(theme == "light" ? .black : .white)
@@ -90,6 +112,7 @@ struct LeaderBoard: View {
                             .foregroundColor(theme == "light" ? .black : .white)
                     }
                     
+                    //list of result
                     if results.count != 0 {
                         
                         RowView()
@@ -102,6 +125,7 @@ struct LeaderBoard: View {
                 }
             }
             .onAppear{
+                //background sound
                 playSound(sound: "leaderboardbackground", type: "mp3")
                 audioPlayer?.volume = 0.1
             }
@@ -115,34 +139,6 @@ struct LeaderBoard: View {
     }
 }
 
-struct ExtendedDivider: View {
-    var width: CGFloat = 2
-    var direction: Axis.Set = .horizontal
-    @Environment(\.colorScheme) var colorScheme
-    var body: some View {
-        ZStack {
-            Rectangle()
-                .fill(colorScheme == .dark ? Color(red: 0, green: 0, blue: 0) : Color(red: 0, green: 0, blue: 0))
-                .applyIf(direction == .vertical) {
-                    $0.frame(width: width)
-                    .edgesIgnoringSafeArea(.vertical)
-                } else: {
-                    $0.frame(height: width)
-                    .edgesIgnoringSafeArea(.horizontal)
-                }
-        }
-    }
-}
-
-extension View {
-    @ViewBuilder func applyIf<T: View>(_ condition: @autoclosure () -> Bool, apply: (Self) -> T, else: (Self) -> T) -> some View {
-        if condition() {
-            apply(self)
-        } else {
-            `else`(self)
-        }
-    }
-}
 
 struct Test_Previews: PreviewProvider {
     static var previews: some View {

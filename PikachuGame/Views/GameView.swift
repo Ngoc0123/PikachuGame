@@ -5,6 +5,18 @@
 //  Created by Nguyen The Bao Ngoc on 11/08/2023.
 //
 
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Nguyen The Bao Ngoc
+  ID: s3924436
+  Created  date: 11/08/2023.
+  Last modified: 06/09/2023
+  Acknowledgement: lecture slide
+*/
+
 import SwiftUI
 import AVFoundation
 
@@ -352,7 +364,7 @@ struct GameView: View {
                                         isGaming = false
                                     }
                                 } label: {
-                                    CustomButton(text: "Back to Meunu", width: 200, height: 30)
+                                    CustomButton(text: "Back to Menu", width: 200, height: 30)
                                 }
                             }
                             
@@ -416,6 +428,7 @@ struct GameView: View {
 
 // MARK: Game Logic
 
+    //check remaining: the matrix is empty, victory
     func checkRemaining() -> Bool{
         if remainIndex.count == 0{
             tvm.stopTimer()
@@ -431,6 +444,7 @@ struct GameView: View {
         return false
     }
     
+    //shuffle the remaining block of the game without changing pokemon or indice
     func shuffleRemaining(){
         remainIndex.shuffle()
         
@@ -445,6 +459,7 @@ struct GameView: View {
         return
     }
     
+    //check to see if there is any available pairs, if not shuffle
     func checkAvailable() -> Bool{
         
         for i in remainPokemon.indices {
@@ -465,6 +480,7 @@ struct GameView: View {
         return true
     }
     
+    //function to remove a block at the given index
     func removePokemonIndex(index: Int){
         pokemonGrid[index] = Pokemon(id: -1, name: "")
 
@@ -474,6 +490,24 @@ struct GameView: View {
         
     }
     
+    
+//MARK: Valid connection
+    /*
+     In the my game, I divide the case of connection into 5 cases:
+        I case: on the same row or col and dont have obtacle between them (edge)
+        U case: on the same row or col but have obstacle between so the connection have to go around the obstable (3 edges)
+        Z case: the coordinate form a rectangle and the connection if inside the rectangle
+        L case: same as Z case but 1 edge line ontop of 1 edge of the rectangle
+        Ux case: also form a rectangle but the connect go outside, bigger than the retangle
+     
+     The U and Ux case share the same logic as it will go around the obstacle
+     */
+    
+    /*check case of the chosen block:
+        -same row
+        -same column
+        -in a rectangle
+     */
     func checkCase(index1: Int, index2: Int) -> Int {
         var res = 0
         
@@ -493,6 +527,8 @@ struct GameView: View {
         return res
     }
     
+    //I Case
+    //check the given row from x1 to x2 to see if it is valid
     func checkRow(x1: Int, x2: Int, y: Int) -> Bool{
         if x1 == x2 {
             return true
@@ -517,6 +553,8 @@ struct GameView: View {
         return true
     }
     
+    //I Case
+    //check the given col from y1 to y2 to see if it is valid
     func checkCol(y1: Int, y2: Int, x:Int) -> Bool{
         if y1 == y2 {
             return true
@@ -542,14 +580,18 @@ struct GameView: View {
         return true
     }
     
+    //get x coordinate of the given index
     func getXCoordinate(index: Int) -> Int{
         return index%columns
     }
     
+    //get y coordinate of the given index
     func getYCoordinate(index: Int) -> Int{
         return index/columns
     }
     
+    
+    //check col inside a rec(Z case)
     func checkHRectangle(index1: Int, index2: Int) -> Bool{
 
         var u,d:Int
@@ -581,6 +623,7 @@ struct GameView: View {
         return false
     }
     
+    //check row inside a rec(Z case but vertical)
     func checkVRectangle(index1: Int, index2: Int) -> Bool{
 
         var l,r:Int
@@ -610,6 +653,7 @@ struct GameView: View {
         return false
     }
     
+    //U cases and L case horizontally
     func checkMoreCols(index1: Int, index2: Int)->Bool{
 
         var u,d:Int
@@ -656,6 +700,7 @@ struct GameView: View {
         return false
     }
     
+    //U cases and L case vertically
     func checkMoreRows(index1: Int, index2: Int)->Bool{
         var l,r:Int
 
@@ -694,7 +739,7 @@ struct GameView: View {
         return false
     }
     
-    
+    //match 2 blocks: check the connection between 2 blocks
     func matchingBlocks(index1: Int, index2: Int) -> Bool{
         if pokemonGrid[index1].id != pokemonGrid[index2].id{
             return false

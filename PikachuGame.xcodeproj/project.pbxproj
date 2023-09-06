@@ -27,7 +27,6 @@
 		2F6DF48A2AA50969005C75C7 /* Result+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6DF4882AA50969005C75C7 /* Result+CoreDataClass.swift */; };
 		2F6DF48B2AA50969005C75C7 /* Result+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6DF4892AA50969005C75C7 /* Result+CoreDataProperties.swift */; };
 		2FA015F22AA771D700C9AD21 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA015F12AA771D700C9AD21 /* SplashScreenView.swift */; };
-		2FB305A22AA4C7F100DE913A /* ArrowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB305A12AA4C7F100DE913A /* ArrowButton.swift */; };
 		2FBCAAE02AA520B40060CFAD /* PlayerData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBCAADE2AA520B40060CFAD /* PlayerData+CoreDataClass.swift */; };
 		2FBCAAE12AA520B40060CFAD /* PlayerData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBCAADF2AA520B40060CFAD /* PlayerData+CoreDataProperties.swift */; };
 		2FBCAAE32AA5D1D30060CFAD /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBCAAE22AA5D1D30060CFAD /* ProfileView.swift */; };
@@ -71,7 +70,6 @@
 		2F6DF4882AA50969005C75C7 /* Result+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2F6DF4892AA50969005C75C7 /* Result+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2FA015F12AA771D700C9AD21 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
-		2FB305A12AA4C7F100DE913A /* ArrowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowButton.swift; sourceTree = "<group>"; };
 		2FBCAADE2AA520B40060CFAD /* PlayerData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2FBCAADF2AA520B40060CFAD /* PlayerData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2FBCAAE22AA5D1D30060CFAD /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -163,7 +161,6 @@
 				2F5B85222A96644400D5BB39 /* TimerBar.swift */,
 				2FA015F12AA771D700C9AD21 /* SplashScreenView.swift */,
 				2FBCAAE22AA5D1D30060CFAD /* ProfileView.swift */,
-				2FB305A12AA4C7F100DE913A /* ArrowButton.swift */,
 				2F5B851E2A8923A100D5BB39 /* MenuView.swift */,
 				2F2232002AA3A4C400F14258 /* LeaderBoard.swift */,
 				2F2232072AA45D9E00F14258 /* RowView.swift */,
@@ -313,7 +310,6 @@
 				2FBCAAE12AA520B40060CFAD /* PlayerData+CoreDataProperties.swift in Sources */,
 				2FE21EC42AA30C82005E38D6 /* CustomButton.swift in Sources */,
 				2F2232042AA3A63800F14258 /* DataController.swift in Sources */,
-				2FB305A22AA4C7F100DE913A /* ArrowButton.swift in Sources */,
 				2F2232082AA45D9E00F14258 /* RowView.swift in Sources */,
 				2F4FDE2C2AA7206B0082B662 /* AvailableView.swift in Sources */,
 				2F5B85232A96644400D5BB39 /* TimerBar.swift in Sources */,

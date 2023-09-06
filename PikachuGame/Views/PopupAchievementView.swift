@@ -5,6 +5,17 @@
 //  Created by Nguyen The Bao Ngoc on 04/09/2023.
 //
 
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Nguyen The Bao Ngoc
+  ID: s3924436
+  Created  date: 02/09/2023.
+  Last modified: 04/09/2023
+  Acknowledgement: lecture slide
+*/
 import SwiftUI
 
 struct PopupAchievementView: View {
@@ -22,8 +33,10 @@ struct PopupAchievementView: View {
                         .font(.title)
                         .fontWeight(.bold)
                     HStack{
+                        //Get achivement image and name
                         Achievement(progress: 4, id: id)
                         
+                        //announcement of achievement
                         switch id {
                         case 1:
                             Text(language == "english" ? "Complete stage 1" : "Hoàn thành màn 1")

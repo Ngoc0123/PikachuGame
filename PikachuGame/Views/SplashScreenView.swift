@@ -5,6 +5,17 @@
 //  Created by Nguyen The Bao Ngoc on 05/09/2023.
 //
 
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Nguyen The Bao Ngoc
+  ID: s3924436
+  Created  date: 05/09/2023.
+  Last modified: 06/09/2023
+  Acknowledgement: lecture slide
+*/
 import SwiftUI
 
 struct SplashScreenView: View {
@@ -12,7 +23,7 @@ struct SplashScreenView: View {
     @State var size = 0.8
     @State var opacity = 0.5
     
-    
+    //splash screen view
     var body: some View {
         ZStack{
             Color(red: 237/255,green:150/255,blue:57/255)

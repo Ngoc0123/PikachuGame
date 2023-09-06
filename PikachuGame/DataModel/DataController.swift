@@ -19,6 +19,7 @@ class DataController: ObservableObject{
                 return
             }
             
+            //if player have the same name, merge
             self.container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
         }
     }
@@ -32,6 +33,7 @@ class DataController: ObservableObject{
         }
     }
     
+    //add Result object into core data
     func addResult(name:String , score: Int64, context: NSManagedObjectContext){
         let result = Result(context: context)
 
@@ -41,6 +43,7 @@ class DataController: ObservableObject{
         save(context: context)
     }
     
+    //add PlayerData object to core data
     func addPlayer(name:String, context: NSManagedObjectContext){
         let playerdata = PlayerData(context: context)
 
@@ -53,6 +56,7 @@ class DataController: ObservableObject{
         save(context: context)
     }
     
+    //get Player list
     func getAllPlayer(context: NSManagedObjectContext) -> [PlayerData]{
         let fetchRequest: NSFetchRequest<PlayerData> = PlayerData.fetchRequest()
         
@@ -63,6 +67,7 @@ class DataController: ObservableObject{
         }
     }
     
+    //get Player of the given name
     func searchFor(name: String, context: NSManagedObjectContext) -> Player{
         let players = getAllPlayer(context: context)
         var playerIndex = -1
@@ -75,9 +80,6 @@ class DataController: ObservableObject{
                 break
             }
         }
-        
-        print(("\(playerIndex)"))
-        
         if playerIndex == -1 {
             DataController().addPlayer(name: name, context: context)
             player.name = name
@@ -98,6 +100,7 @@ class DataController: ObservableObject{
         
     }
     
+    //save info of the current player
     func savePlayer(player: Player, context: NSManagedObjectContext){
         let playerdata = PlayerData(context: context)
         playerdata.name = player.name

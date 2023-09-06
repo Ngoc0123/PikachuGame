@@ -5,22 +5,43 @@
 //  Created by Nguyen The Bao Ngoc on 05/09/2023.
 //
 
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Nguyen The Bao Ngoc
+  ID: s3924436
+  Created  date: 05/09/2023.
+  Last modified: 06/09/2023
+  Acknowledgement: lecture slide
+*/
 import SwiftUI
 
 struct HowToPlayView: View {
+    //current player
     @Binding var player: Player
+    
+    //language and theme variable
     let language = UserDefaults.standard.string(forKey: "Language") ?? "english"
     let theme = UserDefaults.standard.string(forKey: "theme") ?? "light"
     
+    //@State to switch back to menu
     @State var isHTP = true
     var body: some View {
+        
         if isHTP {
+            
             ZStack{
+                
+                //background
                 Image(theme == "light" ? "Background" : "BackGroundDark")
                     .resizable()
                     .frame(width: UIScreen.main.bounds.width+10,height: UIScreen.main.bounds.height+30)
                 VStack{
                     HStack(alignment: .center){
+                        
+                        //back button
                         Button {
                             withAnimation {
                                 isHTP = false
@@ -33,6 +54,7 @@ struct HowToPlayView: View {
                         }
                         .padding(.leading,50)
 
+                        //title
                         Image(language == "english" ? "HTP" : "HD")
                             .resizable()
                             .scaledToFit()
@@ -45,6 +67,7 @@ struct HowToPlayView: View {
                     .padding(.top, 30)
                     .frame(minWidth: 0,maxWidth: .infinity)
                     
+                    //the instruction
                     ScrollView{
                         
                         VStack(alignment: .leading, spacing: 10){
@@ -130,6 +153,7 @@ struct HowToPlayView: View {
                 
             }
             .onAppear{
+                //play background sound
                 playSound(sound: "htpbackground", type: "mp3")
                 audioPlayer?.volume = 0.1
             }

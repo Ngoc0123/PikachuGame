@@ -5,16 +5,32 @@
 //  Created by Nguyen The Bao Ngoc on 04/09/2023.
 //
 
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Nguyen The Bao Ngoc
+  ID: s3924436
+  Created  date: 04/09/2023.
+  Last modified: 06/09/2023
+  Acknowledgement: lecture slide, youtube, stackoverflow
+*/
 import SwiftUI
 
+//pop up profile view when tapped on profile button
 struct ProfileView: View {
     @Binding var player: Player
     @State var language = UserDefaults.standard.string(forKey: "Language")
     var body: some View {
+        
+        //Title
         VStack{
             Text(language == "english" ? "Profile" : "Hồ sơ")
                 .font(.title)
                 .fontWeight(.bold)
+            
+            //Information in text
             VStack(alignment: .leading){
                 HStack(spacing: 50){
                     VStack(alignment: .leading){
@@ -44,6 +60,7 @@ struct ProfileView: View {
                 
             }
             
+            //Achievements slider
             VStack{
                 TabView{
                     ForEach(1..<4){index in

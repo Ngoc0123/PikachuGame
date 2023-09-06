@@ -5,62 +5,91 @@
 //  Created by Nguyen The Bao Ngoc on 13/08/2023.
 //
 
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Nguyen The Bao Ngoc
+  ID: s3924436
+  Created  date: 13/08/2023.
+  Last modified: 06/09/2023
+  Acknowledgement: lecture slide, youtube
+*/
+
 import SwiftUI
 import CoreData
 import AVFoundation
 
 struct MenuView: View {
-    @FetchRequest(sortDescriptors: []) var players: FetchedResults<PlayerData>
-    @Environment (\.managedObjectContext) var moc
-    @State var playerIndex = -1
-    @Binding var player: Player
     
-    @State var stage = 1
+    //CoreData of PlayerData
+    @FetchRequest(sortDescriptors: []) var players: FetchedResults<PlayerData>
+    
+    @Environment (\.managedObjectContext) var moc
+    @State var playerIndex = -1 //Index of the player in CoreData
+    @Binding var player: Player //The current player
+    
+    @State var stage = 1 //The chosen stage
+    
+    //State variable to rerender views on changes
     @State var view = "menu"
     @State var theme = "light"
-    
-    @State var loggedIn:Bool
-    @State var inputUsername = ""
-    @State var isAlert = false
-    @State var errorText = ""
     @State var language = "english"
+    
+    //State variable to display coresponsding views
+    @State var loggedIn:Bool
+    @State var isAlert = false
+    
+   //Log in variables
+    @State var inputUsername = ""
+    
+    //error text to display
+    @State var errorText = ""
 
     var body: some View {
         
+        //View Navigator using switch
         switch view{
             
-        case "game":
+        case "game": // gameView
             VStack{
                 
                 GameView(player: $player, columns: stage*4, rows: stage * 3, pokemonGrid: PokemonModel().generatePokemonArray(mode: stage), i: 0, remainPokemon: [], remainIndex: [])
             }
-        case "leaderboard":
+        case "leaderboard": //Leaderboard view
             VStack{
                 LeaderBoard(player: $player)
             }
-        case "setting":
+        case "setting": //Setting view
             VStack{
                 SettingView(player: $player)
                     
             }
-        case "howtoplay":
+        case "howtoplay": //Howtoplay view
             VStack{
                 HowToPlayView(player: $player)
                     
             }
         default:
+            
+            
             ZStack{
+                //Background img
                 Image(theme == "light" ? "Background" : "BackGroundDark")
                     .resizable()
                     .frame(width: UIScreen.main.bounds.width+10,height: UIScreen.main.bounds.height+30)
                 
+                //frame of contents
                 VStack(spacing: 20){
+                    
+                    //title
                     Image("PokemonLogo")
                         .resizable()
                         .scaledToFit()
                         .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? 600 : 300)
                 
-                    
+                    //Stages
                     HStack(spacing: 50){
                         Button {
                             AudioServicesPlaySystemSound(1104)
@@ -117,6 +146,9 @@ struct MenuView: View {
                         
                     }
                     .padding(.top, 5)
+                    
+                    
+                    //Error text if stage unavailable
                     HStack{
                         if !errorText.isEmpty{
                             Text(errorText)
@@ -127,7 +159,7 @@ struct MenuView: View {
                         }
                     }.frame(height: 50)
                     
-                    
+                    //Button to navigate to different views
                     HStack{
                         Button {
                             AudioServicesPlaySystemSound(1104)
@@ -159,16 +191,20 @@ struct MenuView: View {
                     
                 }
                 .onAppear{
+                    //background music
                     playSound(sound: "background", type: "mp3")
                     audioPlayer?.volume = 0.1
                     
                     if UserDefaults.standard.integer(forKey: "firstTime") == 1 {
+                        //get the value in CoreData or UserDefault
                         player = DataController().searchFor(name: UserDefaults.standard.string(forKey: "currentName")!, context: moc)
                         player.gameMode = UserDefaults.standard.integer(forKey: "currentMode")
                         
                         theme = UserDefaults.standard.string(forKey: "theme") ?? "light"
                         language = UserDefaults.standard.string(forKey: "Language")!
                     }else{
+                        
+                        //default value
                         player.gameMode = 1
                         language = "english"
                         theme = "light"
@@ -179,7 +215,6 @@ struct MenuView: View {
                 }
                 .foregroundColor(.white)
                 .alert(Text("Error! Please fill in your username!!"), isPresented: $isAlert) {
-                    
                     Button {
                         isAlert = false
                     } label: {
@@ -190,7 +225,7 @@ struct MenuView: View {
                 
                 
                 
-                
+                //first time user
                 if loggedIn || UserDefaults.standard.integer(forKey: "firstTime") == 1 {
                     
                 }else{
